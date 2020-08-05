@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+     version="3.1">
+     
+	<display-name>portfolio</display-name>
+  
+  <context-param>
+  	<param-name>contextClass</param-name>
+	<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+  </context-param>
+  <context-param>
+	<param-name>contextConfigLocation</param-name>
+	<param-value>com.projects.je25th.portfolio.config.ApplicationConfig</param-value>
+  </context-param>
+  <!-- listener : 특정 이벤트가 발생했을 때 동작 -->
+  <listener>
+  	<!-- 컨텍스트가 로딩될때(서버가 온될때?) ContextLoaderListener 클래스를 실행하라 -->
+  	<!-- ContextLoaderListener 클래스가 로딩될 때 위의 <context-param>에 등록되어있는 것을 참고하여 로딩하라 -->
+	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+  <!-- 모든 요청을 DispatcerServlet에서 받을 것이다 -->
+  <servlet>
+  	<!-- DispatcerServlet을 프론트 서블릿으로 등록 -->
+  	<servlet-name>mvc</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <!-- 참고한 설정파일 알려주기 -->
+    <init-param>
+      <param-name>contextClass</param-name>
+      <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </init-param>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>com.projects.je25th.portfolio.config.WebMvcContextConfiguration</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>mvc</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+  <!-- filter : 요청이 수행되기 전 or 응답이 나가기 전에 수행함 -->
+  <!-- 한글 인코딩을 편하게 설정할 수 있음 -->
+  <filter>
+	<filter-name>encodingFilter</filter-name>
+	<filter-class>org.springframework.web.filter.CharacterEncodingFilter
+	</filter-class>
+	<init-param>
+		<param-name>encoding</param-name>
+		<param-value>UTF-8</param-value>
+	</init-param>
+  </filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<!-- filter를 어디까지 적용 할지 설정(아래는 모든 요청에 대해 다 적용함) -->
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+</web-app>
