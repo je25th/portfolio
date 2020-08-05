@@ -158,7 +158,7 @@ function getHashtag(ul, send) {
 		par = "hashtag=" + send;
 	if(ul == null)
 		ul = document.querySelector("#hashtag-list");
-	ajax_getJson('./hashtag.view', par, displayHashtag, ul);
+	ajax_getJson('./gethashtag.rest', par, displayHashtag, ul);
 }
 
 //해쉬태그리스트 화면에 뿌리기
@@ -237,7 +237,7 @@ function addEvtInit() {
 		writeMode();
 	}
 	//쓰기모드
-	else if(location.pathname.search("write") == 0) {
+	else if(location.pathname.search("write") >= 0) {
 		writeMode();
 	}
 	
@@ -426,18 +426,25 @@ function addEvtInit() {
 			}
 		}
 		
-		var par = 'idx=' + idx + 
-					'&user_idx=' + user_idx +
-					'&title=' + title +
-					'&content=' + content +
-					'&hashtag=' + hashtag +
-					'&colorbar=' + colorbar +
-					'&wowpoint=' + wowpoint +
-					'&fold=' + fold;
-		par += '&exist_hashtag=' + exist_hashtag +
-				'&new_hashtag=' + new_hashtag;
+		var par = {
+				idx: idx, 
+				userIdx: user_idx,
+				title: title,
+				content: content,
+				hashtag: hashtag,
+				colorbar: colorbar,
+				wowpoint: wowpoint,
+				fold: fold,
+				exist_hashtag: exist_hashtag,
+				new_hashtag: new_hashtag 
+		};
 		
-		ajax_getJson('./memo.receive', par, function(){window.location.href = "./main";});
+		/* var par = {
+				title: "f",
+				content: "e"
+		}; */
+		//URL, SEND, FUC, fuc_PAR, HttpMethod, isJson
+		ajax_getJson('./writememo.rest', JSON.stringify(par), function(){window.location.href = "./main";}, null, 'PUT', 'json');
 	});
 	
 	//제목 텍스트박스

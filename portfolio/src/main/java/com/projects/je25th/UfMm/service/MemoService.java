@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.projects.je25th.UfMm.dao.HashtagDao;
 import com.projects.je25th.UfMm.dao.MemoDao;
 import com.projects.je25th.UfMm.dao.MemoHasHashtagDao;
+import com.projects.je25th.UfMm.dto.Hashtag;
 import com.projects.je25th.UfMm.dto.Memo;
 
 @Service
@@ -45,11 +46,18 @@ public class MemoService {
 		return result;
 	}
 	
+	@Transactional(readOnly=true)
+	public List<Hashtag> getAllHashtag(int userIdx) {
+		return hashtagDao.selectByUserIdx(userIdx);
+	}
+	
 	@Transactional(readOnly=false)
-	public void writeMemo() {
+	public boolean writeMemo() {
 		//TODO :: 1. memo 테이블에 메모 인서트 -> 자동 입력된 memo_idx 가져오기 
 		//        2. hashtag 테이블에 해쉬태그 인서트 -> 자동 입력된 hashtag_idx 가져오기
 		//        3. 위의 idx들을 memo_has_hashtag 테이블애 인서트
+		
+		return false;
 	}
 	
 	@Transactional(readOnly=false)

@@ -3,7 +3,7 @@
  */
 
 //ajax로 서버에 데이터 요청하여 json으로 받는거 
-function ajax_getJson(URL, SEND, FUC, fuc_PAR) {
+function ajax_getJson(URL, SEND, FUC, fuc_PAR, HttpMethod, isJson) {
 	var oReq = new XMLHttpRequest();
   
 	oReq.onreadystatechange = function(event) {
@@ -26,10 +26,16 @@ function ajax_getJson(URL, SEND, FUC, fuc_PAR) {
       }
       
   	}
-  
-  oReq.open('POST', URL, true);
-  oReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-  oReq.send(SEND);
+
+	if(HttpMethod == undefined)
+		HttpMethod = 'POST';
+	
+    oReq.open(HttpMethod, URL, true);
+	if(isJson == undefined)
+		oReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	else
+		oReq.setRequestHeader('Content-type', 'application/json');//XMLHttpRequest
+    oReq.send(SEND);
 }
 
 //터치 인식
