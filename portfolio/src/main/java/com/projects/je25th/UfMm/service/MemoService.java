@@ -1,5 +1,6 @@
 package com.projects.je25th.UfMm.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.projects.je25th.UfMm.dao.MemoDao;
 import com.projects.je25th.UfMm.dao.MemoHasHashtagDao;
 import com.projects.je25th.UfMm.dto.Hashtag;
 import com.projects.je25th.UfMm.dto.Memo;
+import com.projects.je25th.UfMm.dto.MemoHasHashtag;
 
 @Service
 public class MemoService {
@@ -52,12 +54,32 @@ public class MemoService {
 	}
 	
 	@Transactional(readOnly=false)
-	public boolean writeMemo() {
-		//TODO :: 1. memo 테이블에 메모 인서트 -> 자동 입력된 memo_idx 가져오기 
-		//        2. hashtag 테이블에 해쉬태그 인서트 -> 자동 입력된 hashtag_idx 가져오기
-		//        3. 위의 idx들을 memo_has_hashtag 테이블애 인서트
+	public boolean writeMemo(Memo memo) {
+		//1. memo insert
+		memo.setWdate(new Date());
+		int memoIdx = memoDao.insert(memo);
+		memo.setIdx(memoIdx);
 		
-		return false;
+		//2. hashtag / memo_has_hashtag
+		int hashtagcount = memo.getHashtaglist().size();
+		for(int i=0; i<hashtagcount; i++) {
+			//2-1. hashtag update/insert
+			if(memo.getHashtaglist().get(i).isIdxExist()) {
+				//count up
+				hashtagDao.countUp(memo.getHashtaglist().get(i).getIdx());
+			}
+			else {
+				//new hashtag -> insert 
+				memo.getHashtaglist().get(i).setIdx( hashtagDao.insert(memo.getHashtaglist().get(i)) );
+			}
+			
+			//2-2. memo_has_hashtag insert
+			memoHasHashtagDao.insert(new MemoHasHashtag(memo.getUserIdx()
+														, memo.getIdx()
+														, memo.getHashtaglist().get(i).getIdx()));
+		}
+		
+		return true;
 	}
 	
 	@Transactional(readOnly=false)
@@ -66,8 +88,11 @@ public class MemoService {
 	}
 	
 	@Transactional(readOnly=false)
-	public void modifyMemo() {
-		//TODO :: 
+	public Memo modifyMemo(Memo memo) {
+		memo.setMdate(new Date());
+		memoDao.update(memo);
+		
+		return memo;
 	}
 	
 }

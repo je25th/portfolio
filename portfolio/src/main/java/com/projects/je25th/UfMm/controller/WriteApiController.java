@@ -36,10 +36,13 @@ public class WriteApiController {
 	public AjaxJson writeMemo(@RequestBody Memo memo) {//json으로 요청받은 것을 Memo 형식으로 변환하여 가져옴
 		System.out.println("[UfMm] writememo.rest Put");
 		
-		if(memo !=null)
-			System.out.println(memo.getTitle());
-		
-		AjaxJson send = new AjaxJson(memoService.writeMemo(), null);
+//		if(memo !=null)
+//			System.out.println(memo.toString());
+		memo.setUser_idx(user.getIdx());
+		for(int i=0; i<memo.getHashtaglist().size(); i++) {
+			memo.getHashtaglist().get(i).setUserIdx(user.getIdx());
+		}
+		AjaxJson send = new AjaxJson(memoService.writeMemo(memo), null);
 		return send;
 	}
 }

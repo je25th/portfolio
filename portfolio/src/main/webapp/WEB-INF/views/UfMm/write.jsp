@@ -411,18 +411,18 @@ function addEvtInit() {
 		var fold = "0";
 		
 		//hashtag
-		var exist_hashtag = "";
-		var new_hashtag = "";
+		var hashtaglist = [];
 		var ul_child = document.getElementById("selected-hashtag-list").children;
 		for(var i=0; i<ul_child.length; i++) {
 			var li_id = ul_child[i].id;
+			hashtag += ul_child[i].firstChild.textContent;
 			if(li_id.indexOf(selectedId) >= 0) {
-				hashtag += ul_child[i].firstChild.textContent;
-				exist_hashtag += ul_child[i].id.replace(selectedId, "") + ",";
+				//exist_hashtag
+				hashtaglist.push({idx: ul_child[i].id.replace(selectedId, ""), hashtag: ul_child[i].firstChild.textContent.slice(1)});
 			}
 			else if(li_id == "none") {
-				hashtag += ul_child[i].firstChild.textContent;
-				new_hashtag += ul_child[i].firstChild.textContent;
+				//new_hashtag
+				hashtaglist.push({hashtag: ul_child[i].firstChild.textContent.slice(1)});
 			}
 		}
 		
@@ -435,14 +435,9 @@ function addEvtInit() {
 				colorbar: colorbar,
 				wowpoint: wowpoint,
 				fold: fold,
-				exist_hashtag: exist_hashtag,
-				new_hashtag: new_hashtag 
+				hashtaglist: hashtaglist
 		};
 		
-		/* var par = {
-				title: "f",
-				content: "e"
-		}; */
 		//URL, SEND, FUC, fuc_PAR, HttpMethod, isJson
 		ajax_getJson('./writememo.rest', JSON.stringify(par), function(){window.location.href = "./main";}, null, 'PUT', 'json');
 	});

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class Hashtag {
 	
-	private int idx;
+	private int idx = -1;
 	private int userIdx;
 	private String hashtag;
-	private int count;
+	private int count = 1;
 	private ArrayList<Integer> memo_has_hashtag_idx = new ArrayList<>();
 	
 	public int getIdx() {
@@ -39,6 +39,10 @@ public class Hashtag {
 	}
 	public void setMemo_has_hashtag_idx(ArrayList<Integer> memo_has_hashtag_idx) {
 		this.memo_has_hashtag_idx = memo_has_hashtag_idx;
+	}
+	
+	public boolean isIdxExist() {
+		return this.idx==-1? false:true; 
 	}
 	
 }

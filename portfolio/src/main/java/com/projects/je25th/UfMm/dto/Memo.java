@@ -122,5 +122,16 @@ public class Memo {
 	public void setHashtaglist(List<Hashtag> hashtaglist) {
 		this.hashtaglist = hashtaglist;
 	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		String str = "";
+		if(hashtaglist != null) {
+			for(int i=0; i<hashtaglist.size(); i++)
+			str +=  "idx:" + hashtaglist.get(i).getIdx() + ", hashtag:" + hashtaglist.get(i).getHashtag() + "\n";
+		}
+		return str;
+	}
 	
 }

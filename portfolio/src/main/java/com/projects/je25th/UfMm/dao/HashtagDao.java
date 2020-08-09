@@ -9,7 +9,9 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
@@ -51,16 +53,28 @@ public class HashtagDao {
 		return results;
 	}
 	
-	public Hashtag insert(Hashtag hashtag) {
-		//TODO ::
-		
-		return hashtag;
+	public int insert(Hashtag hashtag) {
+		SqlParameterSource params = new BeanPropertySqlParameterSource(hashtag);
+		return insertAction.executeAndReturnKey(params).intValue();
 	}
 	
-	public Hashtag update(Hashtag hashtag) {
+	public boolean update(Hashtag hashtag) {
 		//TODO ::
+		return false;
+	}
+	
+	public boolean countUp(int hashtagIdx) {
+		Map<String, Object> params = Collections.singletonMap("hashtagIdx", hashtagIdx);
+		int result = jdbc.update("UPDATE hashtag SET count= count+1 WHERE idx = :hashtagIdx", params);
 		
-		return hashtag;
+		return result>0? true : false;
+	}
+	
+	public boolean countDown(int hashtagIdx) {
+		Map<String, Object> params = Collections.singletonMap("userIdx", hashtagIdx);
+		int result = jdbc.update("UPDATE hashtag SET count= count-1 WHERE idx=?", params);
+		
+		return result>0? true : false;
 	}
 	
 	public int deleteByHashtagIdx() {

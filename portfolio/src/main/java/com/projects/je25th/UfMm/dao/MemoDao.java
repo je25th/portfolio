@@ -65,7 +65,7 @@ public class MemoDao {
 		return null;
 	}
 	
-	public Memo insert(Memo memo) {
+	public int insert(Memo memo) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();//자동생성되는 키(memo.idx)값을 저장
 		SqlParameterSource params = new BeanPropertySqlParameterSource(memo);//알아서 파라미터로 바꿔주나벼...
 //		Map<String, Object> params = new HashMap<>();
@@ -79,16 +79,15 @@ public class MemoDao {
 		jdbc.update("INSERT INTO memo (user_idx, title, content, hashtag, colorbar, wowpoint, fold) "
 					+ "VALUES (:userIdx, :title, :content, :hashtag, :colorbar, :wowpoint, :fold)"
 					, params, keyHolder);
-		//자동생성된 키값 저장해줌
-		memo.setIdx(keyHolder.getKey().intValue());
 		
-		return memo;
+		//자동생성된 키값 반환
+		return keyHolder.getKey().intValue();
 	}
 	
-	public Memo update(Memo memo) {
+	public boolean update(Memo memo) {
 		//TODO ::
 		
-		return memo;
+		return false;
 	}
 	
 	public int deleteByMemoIdx(int userIdx, int memoIdx) {
