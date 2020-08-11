@@ -2,7 +2,7 @@ package com.projects.je25th.UfMm.dto;
 
 import java.util.Date;
 
-public class User {
+public class User implements AuthInfo {
 
 	private int idx;
 	private String id;

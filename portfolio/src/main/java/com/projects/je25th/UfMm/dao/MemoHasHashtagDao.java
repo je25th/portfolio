@@ -30,6 +30,18 @@ public class MemoHasHashtagDao {
 				.usingGeneratedKeyColumns("idx");
 	}
 	
+	public List<MemoHasHashtag> selectByMemoIdx(int userIdx, int memoIdx) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("userIdx", userIdx);
+		params.put("memoIdx", memoIdx);
+		List<MemoHasHashtag> results = jdbc.query("SELECT * FROM memo_has_hashtag "
+												+ "WHERE user_idx = :userIdx AND memo_idx = :memoIdx"
+												, params
+												, rowMapper);
+		
+		return results;
+	}
+	
 	public List<MemoHasHashtag> selectByHashtagIdx(int userIdx, int hashtagIdx) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("userIdx", userIdx);

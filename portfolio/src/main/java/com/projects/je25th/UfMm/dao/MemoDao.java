@@ -94,9 +94,9 @@ public class MemoDao {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("userIdx", userIdx);
 		params.put("memoIdx", memoIdx);
-		jdbc.update("DELETE FROM memo WHERE idx = :memoIdx AND userIdx = :userIdx", params);
+		int result = jdbc.update("DELETE FROM memo WHERE idx = :memoIdx AND user_idx = :userIdx", params);
 		
-		return 0;
+		return result;
 	}
 	
 }

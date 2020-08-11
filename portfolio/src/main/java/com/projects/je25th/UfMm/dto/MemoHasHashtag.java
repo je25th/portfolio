@@ -7,6 +7,10 @@ public class MemoHasHashtag {
 	private int memoIdx;
 	private int hashtagIdx;
 	
+	public MemoHasHashtag() {
+		
+	}
+	
 	public MemoHasHashtag(int userIdx, int memoIdx, int hashtagIdx) {
 		this.userIdx = userIdx;
 		this.memoIdx = memoIdx;

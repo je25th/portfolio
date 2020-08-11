@@ -83,14 +83,14 @@ function addMenuEvt() {
 		if(p.id == "popup-btn-delete") {
 			if(SelectedArticle == null) return;
 			
-			ajax_getJson('./delete/' + SelectedArticle.id, 'idx='+SelectedArticle.id, function(){
+			ajax_getJson('./delete/' + SelectedArticle.id, null, function(){
 				SelectedArticle.parentElement.removeChild(SelectedArticle);
 				
 				//팝업닫기
 				popup_close("delete-popup");
 				SelectedArticle = null;
 			    //article_btn_close(SelectedArticle);
-			});
+			}, null, 'DELETE');
 			//SelectedArticle.firstElementChild.firstElementChild.style.transform = "translate3d(-100%, 0px, 0px)";
 			//SelectedArticle.parentElement.removeChild(SelectedArticle);
 			

@@ -5,10 +5,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import com.projects.je25th.UfMm.service.AuthCheckInterceptor;
 
 @Configuration//설정 파일임을 알림
 @EnableWebMvc
@@ -43,6 +46,18 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter {
         resolver.setPrefix("/WEB-INF/views/");
         resolver.setSuffix(".jsp");
         return resolver;
+    }
+    
+    @Bean
+    public AuthCheckInterceptor authCheckInterceptor() {
+    	return new AuthCheckInterceptor();
+    }
+    
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+    	registry.addInterceptor(authCheckInterceptor())
+    		.addPathPatterns("/UnfoldedMemo/**")
+    		.excludePathPatterns("/UnfoldedMemo/login");
     }
     
 }

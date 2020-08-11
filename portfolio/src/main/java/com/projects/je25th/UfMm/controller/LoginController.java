@@ -1,5 +1,7 @@
 package com.projects.je25th.UfMm.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.projects.je25th.UfMm.dto.User;
+import com.projects.je25th.UfMm.dto.AuthInfo;
 import com.projects.je25th.UfMm.service.UserService;
 
 @Controller
@@ -28,13 +30,16 @@ public class LoginController {
 	}
 	
 	@PostMapping
-	public String submit(@RequestParam(value="id")String id, @RequestParam(value="pw")String pw) {
+	public String submit(@RequestParam(value="id")String id, @RequestParam(value="pw")String pw, HttpSession session) {
 		System.out.println("[UfMm] login Post");
 		
-		//로그인
-		User user = userService.login(id, pw);
-		if(user != null)
+		//아이디 비번 체크
+		AuthInfo authInfo = userService.login(id, pw);
+		if(authInfo != null) {
+			//세션
+			session.setAttribute("authInfo", authInfo);
 			return "redirect:/UnfoldedMemo/main";
+		}
 		
 		return "redirect:/UnfoldedMemo/login";
 	}

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.projects.je25th.UfMm.dao.UserDao;
+import com.projects.je25th.UfMm.dto.AuthInfo;
 import com.projects.je25th.UfMm.dto.User;
 
 @Service
@@ -20,7 +21,6 @@ public class UserService {
 
 	@Transactional(readOnly=true)//해당 트랜잭션을 읽기 전용모드로 처리
 	public User login(String id, String pw) {
-		//TODO :: 로그인 세션 적용
 		User check = userDao.selectById(id);
 		
 		if(check != null && check.getPw().equals(pw) ) 
