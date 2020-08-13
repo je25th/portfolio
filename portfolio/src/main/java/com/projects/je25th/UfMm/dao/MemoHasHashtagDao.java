@@ -63,12 +63,20 @@ public class MemoHasHashtagDao {
 		//TODO ::
 	}
 	
-	public void deleteByMemoHasHashtagIdx() {
-		//TODO ::
+	public int deleteByMemoHasHashtagIdx(int memoHasHashtagIdx) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("memoHasHashtagIdx", memoHasHashtagIdx);
+		int result = jdbc.update("DELETE FROM memo_has_hashtag WHERE idx = :memoHasHashtagIdx", params);
+		
+		return result;
 	}
 	
-	public void deleteByMemoIdx() {
-		//TODO ::
+	public int deleteByMemoIdx(int memoIdx) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("memoIdx", memoIdx);
+		int result = jdbc.update("DELETE FROM memo_has_hashtag WHERE memo_idx = :memoIdx", params);
+		
+		return result;
 	}
 	
 }

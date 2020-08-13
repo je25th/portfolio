@@ -16,14 +16,25 @@ import com.projects.je25th.UfMm.service.MemoService;
 import com.projects.je25th.UfMm.service.MyUtill;
 
 @Controller
-@RequestMapping("UnfoldedMemo/view")
 public class ViewController {
 
 	@Autowired
 	MemoService memoService;
 	
-	@GetMapping("/{memoIdx}")
+	@GetMapping("UnfoldedMemo/view/{memoIdx}")
 	public String view(@PathVariable(name="memoIdx")int memoIdx, ModelMap model, HttpSession session) {
+		System.out.println("[UfMm] view Get");
+		
+		AuthInfo authInfo = MyUtill.getAuthInfo(session);
+		
+		Memo memo = memoService.viewMemoByMemoIdx(authInfo.getIdx(), memoIdx);
+		model.addAttribute("memo", memo);
+		
+		return "UfMm/write";
+	}
+	
+	@GetMapping("UnfoldedMemo/modify/{memoIdx}")
+	public String modify(@PathVariable(name="memoIdx")int memoIdx, ModelMap model, HttpSession session) {
 		System.out.println("[UfMm] view Get");
 		
 		AuthInfo authInfo = MyUtill.getAuthInfo(session);

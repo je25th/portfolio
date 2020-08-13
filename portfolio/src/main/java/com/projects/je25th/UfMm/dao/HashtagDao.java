@@ -72,8 +72,7 @@ public class HashtagDao {
 	
 	public boolean countDown(int hashtagIdx) {
 		Map<String, Object> params = Collections.singletonMap("hashtagIdx", hashtagIdx);
-		//TODO ::                                                           @@@트랜잭션 롤백 테스트중@@@
-		int result = jdbc.update("UPDATE hashtag SET count= count-1 WHERE idx = :hashtagdIdx", params);
+		int result = jdbc.update("UPDATE hashtag SET count= count-1 WHERE idx = :hashtagIdx", params);
 		
 		return result>0? true : false;
 	}

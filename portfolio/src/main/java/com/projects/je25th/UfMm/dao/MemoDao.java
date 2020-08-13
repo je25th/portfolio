@@ -76,18 +76,20 @@ public class MemoDao {
 //		params.put("colorbar", memo.getColorbar());
 //		params.put("wowpoint", memo.getWowpoint());
 //		params.put("fold", memo.getFold());
-		jdbc.update("INSERT INTO memo (user_idx, title, content, hashtag, colorbar, wowpoint, fold) "
-					+ "VALUES (:userIdx, :title, :content, :hashtag, :colorbar, :wowpoint, :fold)"
+		jdbc.update("INSERT INTO memo (user_idx, title, content, hashtag, colorbar, wowpoint, fold, wdate, mdate) "
+					+ "VALUES (:userIdx, :title, :content, :hashtag, :colorbar, :wowpoint, :fold, :wdate, :mdate)"
 					, params, keyHolder);
 		
 		//자동생성된 키값 반환
 		return keyHolder.getKey().intValue();
 	}
 	
-	public boolean update(Memo memo) {
-		//TODO ::
+	public void update(Memo memo) {
+		SqlParameterSource params = new BeanPropertySqlParameterSource(memo);
+		jdbc.update("UPDATE memo SET title=:title, content=:content, hashtag=:hashtag, colorbar=:colorbar, wowpoint=:wowpoint, fold=:fold, mdate=:mdate "
+				+ "WHERE idx= :idx"
+				, params);
 		
-		return false;
 	}
 	
 	public int deleteByMemoIdx(int userIdx, int memoIdx) {

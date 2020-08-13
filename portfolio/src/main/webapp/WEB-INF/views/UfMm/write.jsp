@@ -158,7 +158,7 @@ function getHashtag(ul, send) {
 		par = "hashtag=" + send;
 	if(ul == null)
 		ul = document.querySelector("#hashtag-list");
-	ajax_getJson('./gethashtag.rest', par, displayHashtag, ul);
+	ajax_getJson('/portfolio/UnfoldedMemo/gethashtag.rest', par, displayHashtag, ul);
 }
 
 //해쉬태그리스트 화면에 뿌리기
@@ -379,7 +379,7 @@ function addEvtInit() {
 		if(e.srcElement.innerHTML == "수정") {
 			console.log("수정버튼");
 			
-			window.location.href = "./modify" + location.search;
+			window.location.href = location.href.replace('view', 'modify');
 			/* document.getElementById("hashtag-textbox").classList.remove(hide_class);//태그검색창 오픈
 			//textarea 리드온리 풀기
 			document.getElementById("title").removeAttribute("readonly");
@@ -393,12 +393,8 @@ function addEvtInit() {
 		if(e.target.classList.contains("offcolor")) return;
 
 		console.log("완료버튼");
+		
 		//memo
-		var idx = "";
-		if(location.search.length > 0) {
-			idx = location.search.replace("?idx=", "");
-		}
-		var user_idx = "1";
 		var title = document.getElementById("title").value;
 		var content = document.getElementById("content").value;
 		var hashtag = "";//밑에서 추가함
@@ -427,8 +423,6 @@ function addEvtInit() {
 		}
 		
 		var par = {
-				idx: idx, 
-				userIdx: user_idx,
 				title: title,
 				content: content,
 				hashtag: hashtag,
@@ -438,8 +432,12 @@ function addEvtInit() {
 				hashtaglist: hashtaglist
 		};
 		
+		var url = '/portfolio/UnfoldedMemo/writememo.rest';
+		if(location.pathname.indexOf('modify') != -1)
+			url = location.pathname;
+		
 		//URL, SEND, FUC, fuc_PAR, HttpMethod, isJson
-		ajax_getJson('./writememo.rest', JSON.stringify(par), function(){window.location.href = "./main";}, null, 'PUT', 'json');
+		ajax_getJson(url, JSON.stringify(par), function(){window.location.href = "/portfolio/UnfoldedMemo/main";}, null, 'PUT', 'json');
 	});
 	
 	//제목 텍스트박스

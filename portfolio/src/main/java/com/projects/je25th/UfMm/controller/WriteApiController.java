@@ -38,12 +38,13 @@ public class WriteApiController {
 	public AjaxJson writeMemo(@RequestBody Memo memo, HttpSession session) {//json으로 요청받은 것을 Memo 형식으로 변환하여 가져옴
 		System.out.println("[UfMm] writememo.rest Put");
 		
+		//user_idx 세팅
 		AuthInfo authInfo = MyUtill.getAuthInfo(session);
-		
 		memo.setUser_idx(authInfo.getIdx());
 		for(int i=0; i<memo.getHashtaglist().size(); i++) {
 			memo.getHashtaglist().get(i).setUserIdx(authInfo.getIdx());
 		}
+		
 		AjaxJson send = new AjaxJson(memoService.writeMemo(memo), null);
 		return send;
 	}
