@@ -3,7 +3,7 @@
  */
 
 //ajax로 서버에 데이터 요청하여 json으로 받는거 
-function ajax_getJson(URL, SEND, FUC, fuc_PAR, HttpMethod, isJson) {
+function ajax_getJson(URL, SEND, FUC, fuc_PAR, HttpMethod) {
 	var oReq = new XMLHttpRequest();
   
 	oReq.onreadystatechange = function(event) {
@@ -29,12 +29,14 @@ function ajax_getJson(URL, SEND, FUC, fuc_PAR, HttpMethod, isJson) {
 
 	if(HttpMethod == undefined)
 		HttpMethod = 'POST';
-	
     oReq.open(HttpMethod, URL, true);
-	if(isJson == undefined)
+    
+	if(SEND == null) {
 		oReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	else
+	}
+	else {
 		oReq.setRequestHeader('Content-type', 'application/json');//XMLHttpRequest
+	}
     oReq.send(SEND);
 }
 

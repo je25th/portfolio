@@ -23,28 +23,31 @@ loadmemo();
 
 function loadmemo() {
 	if(location.pathname.search("main") >= 0) {//.search("modify")
-		ajax_getJson('./main.rest', 'page='+page, displayMemolist, '');
+		//URL, SEND, FUC, fuc_PAR, HttpMethod
+		ajax_getJson(URL_MAIN + '/' + page, null, displayMemolist, null, 'GET');
 	}
 	else if(location.pathname.search("search") >= 0) {
 		//뒤로가기 버튼(main으로)
 		var home = document.getElementById("btn-home");
 		home.addEventListener("click", function() {
-			window.location.href = "./main";
+			window.location.href = URL_MAIN;
 		});
 		//뒤로가기 버튼 켬
 		home.classList.remove(hide_btn_class);
 		
-		ajax_getJson('./main.rest', location.search.substr(1) + '&page='+page, displayMemolist, '');
+		//URL, SEND, FUC, fuc_PAR, HttpMethod
+		ajax_getJson('./main/all', location.search.substr(1) + '&page='+page, displayMemolist, '');
 	}
 	else if(location.pathname.search("star") >= 0) {
 		//뒤로가기 버튼(main으로)
 		var home = document.getElementById("btn-home");
 		home.addEventListener("click", function() {
-			window.location.href = "./main";
+			window.location.href = URL_MAIN;
 		});
 		//뒤로가기 버튼 켬
 		home.classList.remove(hide_btn_class);
 		
+		//URL, SEND, FUC, fuc_PAR, HttpMethod
 		ajax_getJson('./star.view', 'page='+page, displayMemolist, '');
 	}
 }
@@ -83,7 +86,8 @@ function addMenuEvt() {
 		if(p.id == "popup-btn-delete") {
 			if(SelectedArticle == null) return;
 			
-			ajax_getJson('./delete/' + SelectedArticle.id, null, function(){
+			//URL, SEND, FUC, fuc_PAR, HttpMethod
+			ajax_getJson(URL_DELETE + '/' + SelectedArticle.id, null, function(){
 				SelectedArticle.parentElement.removeChild(SelectedArticle);
 				
 				//팝업닫기
@@ -139,7 +143,7 @@ function addMenuEvt() {
 				if(article_btn_close(SelectedArticle)) return;
 				
 				var memo_idx = p.getAttribute("id");
-			    window.location.href = "./view/"+ +memo_idx;
+			    window.location.href = URL_VIEW + '/' + memo_idx;
 			    
 				break;
 			}
@@ -150,7 +154,8 @@ function addMenuEvt() {
 				var starvalue = "1";//현재상태 off
 				if(staricon.classList.toggle("offcolor"))
 					starvalue = "0";
-				ajax_getJson("./star.receive", ('idx=' + p.offsetParent.id +'&star=' + starvalue));
+				//URL, SEND, FUC, fuc_PAR, HttpMethod
+				ajax_getJson(URL_STAR + '/' + p.offsetParent.id, null, 'PATCH');
 				
 				return;
 			}
@@ -265,6 +270,7 @@ function addMenuEvt() {
 			if(str.length > 0)
 				par = "hashtag=" + str;
 			var ul = document.getElementById("hashtag-list");
+			//URL, SEND, FUC, fuc_PAR, HttpMethod
 		    ajax_getJson('./hashtag.view', par, displayHashtag, ul);
 			
 			return;
@@ -442,7 +448,7 @@ function menu_check() {
 function menu_logout() {
     if(menu_wrap.style.width !== wid) return;
 
-    window.location.href = "./login";
+    window.location.href = URL_LOGIN;
 }
 
 function menu_box() {
@@ -454,7 +460,7 @@ function menu_write() {
     if(menu_wrap.style.widthh === ori_wid) return;
     
     //console.log("write");
-    window.location.href = "./write";
+    window.location.href = URL_WRITE;
     //window.location.replace("./write");//이건 뒤로가기 누르면 이상한것같음
 }
 

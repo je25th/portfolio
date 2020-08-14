@@ -178,4 +178,9 @@ public class MemoService {
 		return result;
 	}
 	
+	@Transactional(rollbackFor={Exception.class})
+	public void starToggle(int userIdx, int memoIdx) {
+		//TODO ::
+	}
+	
 }

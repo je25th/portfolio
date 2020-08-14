@@ -20,7 +20,7 @@ public class AuthCheckInterceptor implements HandlerInterceptor {
 				return true;
 			}
 		}
-		response.sendRedirect(request.getContextPath() + "/UnfoldedMemo/login");
+		response.sendRedirect(request.getContextPath() + "/unfolded-memo/login");
 		return false;
 	}
 

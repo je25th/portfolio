@@ -56,8 +56,8 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
     	registry.addInterceptor(authCheckInterceptor())
-    		.addPathPatterns("/UnfoldedMemo/**")
-    		.excludePathPatterns("/UnfoldedMemo/login");
+    		.addPathPatterns("/unfolded-memo/**")
+    		.excludePathPatterns("/unfolded-memo/login");
     }
     
 }

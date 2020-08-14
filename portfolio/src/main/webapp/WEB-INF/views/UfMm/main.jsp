@@ -93,7 +93,9 @@
 </div>
 
 <script type="text/Javascript" charset="UTF-8" src="${pageContext.request.contextPath}/resources/js/UfMm/common.js"></script>
+<script type="text/Javascript" charset="UTF-8" src="${pageContext.request.contextPath}/resources/js/UfMm/url.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/UfMm/mainjs.js"></script>
+
 
 </body>
 </html>

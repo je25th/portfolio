@@ -1,31 +1,61 @@
 package com.projects.je25th.UfMm.controller;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-@RequestMapping(path = "UnfoldedMemo/main")
-public class MainController {
+import com.projects.je25th.UfMm.dto.AuthInfo;
+import com.projects.je25th.UfMm.dto.Memo;
+import com.projects.je25th.UfMm.service.MemoService;
+import com.projects.je25th.UfMm.service.MyUtill;
 
-	@GetMapping
+@Controller
+@RequestMapping(path = "unfolded-memo")
+public class MainController {
+	
+	@Autowired
+	MemoService memoService;
+
+	@GetMapping("/main")
 	public String main() {
 		System.out.println("[UfMm] main Get");
-		
-		//TODO :: 로그인 체크(세션에 없을 시 로그인페이지로 리다이렉트)
 		
 		return "UfMm/main";
 	}
 	
-	@PostMapping
-	public String getMemoList() {
-		System.out.println("[UfMm] main Post");
+	@GetMapping("/write")
+	public String write() {
+		System.out.println("[UfMm] write Get");
 		
-		//TODO :: 로그인 체크(세션에 없을 시 로그인페이지로 리다이렉트)
+		return "UfMm/write";
+	}
+	
+	@GetMapping("/view/{memoIdx}")
+	public String view(@PathVariable(name="memoIdx")int memoIdx, ModelMap model, HttpSession session) {
+		System.out.println("[UfMm] view Get");
 		
-		//TODO :: json으로 메모 리스트를 보내기
+		AuthInfo authInfo = MyUtill.getAuthInfo(session);
 		
-		return "";
+		Memo memo = memoService.viewMemoByMemoIdx(authInfo.getIdx(), memoIdx);
+		model.addAttribute("memo", memo);
+		
+		return "UfMm/write";
+	}
+	
+	@GetMapping("/modify/{memoIdx}")
+	public String modify(@PathVariable(name="memoIdx")int memoIdx, ModelMap model, HttpSession session) {
+		System.out.println("[UfMm] modify Get");
+		
+		AuthInfo authInfo = MyUtill.getAuthInfo(session);
+		
+		Memo memo = memoService.viewMemoByMemoIdx(authInfo.getIdx(), memoIdx);
+		model.addAttribute("memo", memo);
+		
+		return "UfMm/write";
 	}
 }

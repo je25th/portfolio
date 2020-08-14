@@ -13,7 +13,7 @@ import com.projects.je25th.UfMm.dto.AuthInfo;
 import com.projects.je25th.UfMm.service.UserService;
 
 @Controller
-@RequestMapping("/UnfoldedMemo/login")
+@RequestMapping("/unfolded-memo/login")
 public class LoginController {
 
 	@Autowired
@@ -38,10 +38,10 @@ public class LoginController {
 		if(authInfo != null) {
 			//세션
 			session.setAttribute("authInfo", authInfo);
-			return "redirect:/UnfoldedMemo/main";
+			return "redirect:/unfolded-memo/main";
 		}
 		
-		return "redirect:/UnfoldedMemo/login";
+		return "redirect:/unfolded-memo/login";
 	}
 	
 }
