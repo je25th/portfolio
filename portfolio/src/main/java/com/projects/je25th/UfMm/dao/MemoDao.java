@@ -92,6 +92,14 @@ public class MemoDao {
 		
 	}
 	
+	public void updateStar(int memoIdx, int star) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("memoIdx", memoIdx);
+		params.put("star", star);
+		jdbc.update("UPDATE memo SET star=:star WHERE idx= :memoIdx"
+				, params);
+	}
+	
 	public int deleteByMemoIdx(int userIdx, int memoIdx) {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("userIdx", userIdx);

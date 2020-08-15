@@ -155,7 +155,7 @@ function addMenuEvt() {
 				if(staricon.classList.toggle("offcolor"))
 					starvalue = "0";
 				//URL, SEND, FUC, fuc_PAR, HttpMethod
-				ajax_getJson(URL_STAR + '/' + p.offsetParent.id, null, 'PATCH');
+				ajax_getJson(URL_STAR + '/' + p.offsetParent.id, null, null, null, 'PATCH');
 				
 				return;
 			}
@@ -503,22 +503,22 @@ function displayMemolist (dom, parsedJSON) {
     memo.forEach(function(data) {
     	//star
         var staroff = "offcolor";
-        if(data.star === "1")
+        if(data.star == "1")
             staroff = "";
         
         //wowpoint
         var hashtagli = "";
-        if(data.wowpoint === "1")
+        if(data.wowpoint == "1")
         	hashtagli = "<li class='memo-hashtag memo-wowpoint'><i class='fas fa-exclamation'></i></li>";
-        else if(data.wowpoint === "2")
+        else if(data.wowpoint == "2")
         	hashtagli = "<li class='memo-hashtag memo-wowpoint'><i class='fas fa-exclamation'></i><i class='fas fa-exclamation'></i></li>";
-        else if(data.wowpoint === "3")
+        else if(data.wowpoint == "3")
         	hashtagli = "<li class='memo-hashtag memo-wowpoint'><i class='fas fa-exclamation'></i><i class='fas fa-exclamation'></i><i class='fas fa-exclamation'></i></li>";
         
         //hashtag
         var contentli = data.hashtag.split('#')
         contentli.forEach(function(tag) {
-            if(tag !== "")
+            if(tag != "")
                 hashtagli += '<li class="memo-hashtag">#' + tag + '</li>';
         });
         //뿌림

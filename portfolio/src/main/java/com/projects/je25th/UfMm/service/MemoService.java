@@ -179,8 +179,23 @@ public class MemoService {
 	}
 	
 	@Transactional(rollbackFor={Exception.class})
-	public void starToggle(int userIdx, int memoIdx) {
-		//TODO ::
+	public int starToggle(int userIdx, int memoIdx) {
+		int star = -1;
+		
+		try {
+			star = memoDao.selectByMemoIdx(userIdx, memoIdx).getStar();
+			if(star == 0)
+				star = 1;
+			else
+				star = 0;
+			memoDao.updateStar(memoIdx, star);
+		} catch(Exception e) {
+			System.out.println(e);
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			star = -1;
+		}
+		
+		return star;
 	}
 	
 }

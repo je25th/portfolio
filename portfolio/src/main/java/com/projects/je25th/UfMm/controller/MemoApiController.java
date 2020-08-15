@@ -76,7 +76,10 @@ public class MemoApiController {
 		
 		AuthInfo authInfo = MyUtill.getAuthInfo(session);
 		
-		return null;
+		int result = memoService.starToggle(authInfo.getIdx(), memoIdx);
+		AjaxJson send = new AjaxJson(result!=-1? true:false, null);
+		
+		return send;
 	}
 	
 }
