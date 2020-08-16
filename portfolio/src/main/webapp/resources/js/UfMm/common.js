@@ -24,13 +24,12 @@ function ajax_getJson(URL, SEND, FUC, fuc_PAR, HttpMethod) {
       else {
           console.log("ajax Not Responding...");
       }
-      
   	}
-
-	if(HttpMethod == undefined)
-		HttpMethod = 'POST';
+	
+	//참고 :: get메소드일 경우에는 send()메소드로 파라미터 보낼 수 없음
+	//url?parm=파라미터 이렇게 보내야함!!!
+	
     oReq.open(HttpMethod, URL, true);
-    
 	if(SEND == null) {
 		oReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	}

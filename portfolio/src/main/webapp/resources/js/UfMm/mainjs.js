@@ -22,11 +22,11 @@ addMenuEvt();
 loadmemo();
 
 function loadmemo() {
-	if(location.pathname.search("main") >= 0) {//.search("modify")
+	if(location.pathname == URL_MAIN) {//.search("modify")
 		//URL, SEND, FUC, fuc_PAR, HttpMethod
 		ajax_getJson(URL_MAIN + '/' + page, null, displayMemolist, null, 'GET');
 	}
-	else if(location.pathname.search("search") >= 0) {
+	else if(location.pathname == URL_SEARCH) {
 		//뒤로가기 버튼(main으로)
 		var home = document.getElementById("btn-home");
 		home.addEventListener("click", function() {
@@ -36,9 +36,9 @@ function loadmemo() {
 		home.classList.remove(hide_btn_class);
 		
 		//URL, SEND, FUC, fuc_PAR, HttpMethod
-		ajax_getJson('./main/all', location.search.substr(1) + '&page='+page, displayMemolist, '');
+		ajax_getJson(URL_SEARCH + "/" + page , null, displayMemolist, null, 'GET');
 	}
-	else if(location.pathname.search("star") >= 0) {
+	else if(location.pathname == URL_STAR) {
 		//뒤로가기 버튼(main으로)
 		var home = document.getElementById("btn-home");
 		home.addEventListener("click", function() {
@@ -48,7 +48,7 @@ function loadmemo() {
 		home.classList.remove(hide_btn_class);
 		
 		//URL, SEND, FUC, fuc_PAR, HttpMethod
-		ajax_getJson('./star.view', 'page='+page, displayMemolist, '');
+		ajax_getJson(URL_STAR + '/' + page, null, displayMemolist, null, 'GET');
 	}
 }
 
@@ -264,14 +264,15 @@ function addMenuEvt() {
 			return;
 		}
 		
-		//태그 검색
+		//태그 목록 검색
 		if(!document.getElementById("hashtag_search_mode").classList.contains(hide_btn_class)) {
 			var par = "";
 			if(str.length > 0)
 				par = "hashtag=" + str;
+			console.log(par);
 			var ul = document.getElementById("hashtag-list");
 			//URL, SEND, FUC, fuc_PAR, HttpMethod
-		    ajax_getJson('./hashtag.view', par, displayHashtag, ul);
+		    ajax_getJson(URL_HASHTAG_ALL + "?" + par, null, displayHashtag, ul, 'GET');
 			
 			return;
 		}
@@ -437,7 +438,7 @@ function menu_search() {
 function menu_star() {
     if(menu_wrap.style.width === ori_wid) return;
 
-    window.location.href = "./star";
+    window.location.href = URL_STAR;
 }
 
 function menu_check() {

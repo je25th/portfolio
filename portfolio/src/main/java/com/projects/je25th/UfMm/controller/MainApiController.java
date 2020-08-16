@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +28,7 @@ public class MainApiController {
 	
 	@GetMapping("/main/{page}")
 	public AjaxJson viewMemoList(@PathVariable(name="page")int page, HttpSession session) {
-		System.out.println("[UfMm] main/all Get");
+		System.out.println("[UfMm] main/" + page + " Get");
 		
 		AuthInfo authInfo = MyUtill.getAuthInfo(session);
 		
@@ -37,13 +38,33 @@ public class MainApiController {
 		return send;
 	}
 	
-	@GetMapping("/hashtag/all")
-	public AjaxJson sendAllHashtag(HttpSession session) {
-		System.out.println("[UfMm] hashtag/all Get");
+	@GetMapping("/star/{page}")
+	public AjaxJson viewStarList(@PathVariable(name="page")int page, HttpSession session) {
+		System.out.println("[UfMm] star/" + page + " Get");
 		
 		AuthInfo authInfo = MyUtill.getAuthInfo(session);
 		
-		List<Hashtag> result = memoService.getAllHashtag(authInfo.getIdx());
+		//json으로 메모 리스트를 보내기
+		List<Memo> result = memoService.viewOnStarMemoListByUserIdx(authInfo.getIdx(), page);
+		AjaxJson send = new AjaxJson(result==null? false : true, result);
+		return send;
+	}
+	
+	@GetMapping("/hashtag")
+	public AjaxJson sendAllHashtag(@RequestParam(required=false) String hashtag, HttpSession session) {
+		System.out.println("[UfMm] hashtag/all?hashtag=" + hashtag + " Get");
+		
+		AuthInfo authInfo = MyUtill.getAuthInfo(session);
+		
+		List<Hashtag> result = null;
+		if(hashtag != null && hashtag.length() > 0) {
+			result = memoService.getHashtagByHashtag(authInfo.getIdx(), hashtag);
+		}
+		else {
+			//all
+			result = memoService.getAllHashtag(authInfo.getIdx());
+		}
+		
 		AjaxJson send = new AjaxJson(result==null? false : true, result);
 		return send;
 	}

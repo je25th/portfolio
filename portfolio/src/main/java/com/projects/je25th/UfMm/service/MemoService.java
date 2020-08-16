@@ -29,7 +29,7 @@ public class MemoService {
 	
 	@Transactional(readOnly=true)
 	public List<Memo> viewMemoListByUserIdx(int userIdx, int page) {
-		//TODO :: memo에 memo_has_hashtag를 memo.idx=memo_has_hashtag로 left join
+		//memo에 memo_has_hashtag를 memo.idx=memo_has_hashtag로 left join
 		/*
 		 * SELECT memo.idx, memo.user_idx, memo.hashtag, hashtag.hashtag, title,
 		 * content, colorbar, wowpoint, star, wdate, mdate, fold, box FROM memo LEFT
@@ -50,8 +50,18 @@ public class MemoService {
 	}
 	
 	@Transactional(readOnly=true)
+	public List<Memo> viewOnStarMemoListByUserIdx(int userIdx, int page) {
+		return memoDao.selectOnStarByUserIdx(userIdx, page);
+	}
+	
+	@Transactional(readOnly=true)
 	public List<Hashtag> getAllHashtag(int userIdx) {
 		return hashtagDao.selectByUserIdx(userIdx);
+	}
+	
+	@Transactional(readOnly=true)
+	public List<Hashtag> getHashtagByHashtag(int userIdx, String hashtag) {
+		return hashtagDao.selectByHashtag(userIdx, hashtag);
 	}
 	
 	@Transactional(rollbackFor={Exception.class})

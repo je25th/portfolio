@@ -24,16 +24,30 @@
 	    <div id="popup-content" class="popup-content">
 	    	<!-- 키워드 모드 -->
 	    	<div id="keyword_search_mode">
+		        <div>
+		        	+ 
+		        	<span id="star"><i class='icon-star memo-star offcolor'></i></span>
+		        	<span class="memo-wowpoint offcolor"><i class='fas fa-exclamation'></i></span>
+		        	<span class="memo-wowpoint offcolor"><i class='fas fa-exclamation'></i><i class='fas fa-exclamation'></i></span>
+		        	<span class="memo-wowpoint offcolor"><i class='fas fa-exclamation'></i><i class='fas fa-exclamation'></i><i class='fas fa-exclamation'></i></span>
+		        </div>
+		        <div>
+		        	x
+		        </div>
+		        <div>
+		        	-
+		        </div>
 		        <div class="search-order">
 		        	정렬순서 <i class="icon-star memo-staroff"></i> ! !! !!!
 		        </div>
-		        <div></div>
 	    	</div>
 	    	<!-- 해쉬태그 모드 -->
 	        <div id="hashtag_search_mode" class="hashtaglist hide">
 	            <ul id="hashtag-list"></ul>
 	        </div>
 	    </div>
+	    
+	    <div class='btn popup-search-btn'><span class='btn-icon'><i class='icon-magnifying'></i></span></div>
     </div>
     <!-- 팝업메뉴 끝 -->
 

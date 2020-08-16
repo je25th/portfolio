@@ -42,6 +42,18 @@ public class MemoDao {
 		return results.isEmpty() ? null : results;
 	}
 	
+	//10개씩 끊어서 가져옴
+	public List<Memo> selectOnStarByUserIdx(int userIdx, int page) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("userIdx", userIdx);
+		params.put("page", (page-1)*10);
+		List<Memo> results = jdbc.query("SELECT * FROM memo WHERE user_idx = :userIdx AND star = 1 ORDER BY mdate DESC LIMIT :page, 10"
+										, params
+										, rowMapper);
+		
+		return results.isEmpty() ? null : results;
+	}
+	
 	public Memo selectByMemoIdx(int userIdx, int memoIdx) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("userIdx", userIdx);

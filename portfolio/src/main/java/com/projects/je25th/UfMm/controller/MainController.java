@@ -27,6 +27,13 @@ public class MainController {
 		
 		return "UfMm/main";
 	}
+
+	@GetMapping("/star")
+	public String star() {
+		System.out.println("[UfMm] star Get");
+		
+		return "UfMm/main";
+	}
 	
 	@GetMapping("/write")
 	public String write() {
@@ -37,7 +44,7 @@ public class MainController {
 	
 	@GetMapping("/view/{memoIdx}")
 	public String view(@PathVariable(name="memoIdx")int memoIdx, ModelMap model, HttpSession session) {
-		System.out.println("[UfMm] view Get");
+		System.out.println("[UfMm] view/" + memoIdx + " Get");
 		
 		AuthInfo authInfo = MyUtill.getAuthInfo(session);
 		
@@ -49,7 +56,7 @@ public class MainController {
 	
 	@GetMapping("/modify/{memoIdx}")
 	public String modify(@PathVariable(name="memoIdx")int memoIdx, ModelMap model, HttpSession session) {
-		System.out.println("[UfMm] modify Get");
+		System.out.println("[UfMm] modify/" + memoIdx + " Get");
 		
 		AuthInfo authInfo = MyUtill.getAuthInfo(session);
 		

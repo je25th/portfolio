@@ -53,6 +53,17 @@ public class HashtagDao {
 		return results;
 	}
 	
+	public List<Hashtag> selectByHashtag(int userIdx, String hashtag) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("userIdx", userIdx);
+		params.put("hashtag", "%" + hashtag + "%");//LIKE는 이렇게 써야한다!!!!!
+		List<Hashtag> results = jdbc.query("SELECT idx, user_idx, hashtag, count FROM hashtag " 
+											+ "WHERE user_idx = :userIdx AND hashtag LIKE :hashtag"
+											, params
+											, rowMapper);
+		return results;
+	}
+	
 	public int insert(Hashtag hashtag) {
 		SqlParameterSource params = new BeanPropertySqlParameterSource(hashtag);
 		return insertAction.executeAndReturnKey(params).intValue();

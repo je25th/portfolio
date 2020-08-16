@@ -322,6 +322,21 @@ li.memo-hashtag {
 	color: red;
 }
 
+.popup-search-btn {
+	box-sizing: border-box;
+    position: fixed; 
+    left: calc(50% - var(--memusize)/2); 
+    bottom: calc(50% + 10px);
+    
+    background-color: var(--themecolor);
+    
+    width: var(--memusize); 
+    height: var(--memusize);
+    border-radius: var(--memusize);
+    
+    overflow-y: auto;
+}
+
 .popup-content { 
     box-sizing: border-box;
     position: fixed; 
