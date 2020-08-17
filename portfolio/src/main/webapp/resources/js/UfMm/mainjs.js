@@ -244,38 +244,38 @@ function addMenuEvt() {
 		var str = e.srcElement.value;
 		
 		//모드체인지
-		//해쉬태그 모드
+//		//해쉬태그 모드
 		if(str == "#"){
 			console.log("hashtag_search_mode");
 			e.srcElement.value = "";
-			document.getElementById("search-mode").classList.remove("mode-keyword");
-			document.getElementById("keyword_search_mode").classList.add(hide_btn_class);
-			document.getElementById("hashtag_search_mode").classList.remove(hide_btn_class);
-			
+			document.getElementById("search-mode").classList.remove("hide");
+//			document.getElementById("keyword_search_mode").classList.add(hide_btn_class);
+//			document.getElementById("hashtag_search_mode").classList.remove(hide_btn_class);
+//			
 			return;
 		}
-		//키워드 모드
+//		//키워드 모드
 		else if(str == "k" || str == "K") {
 			e.srcElement.value = "";
-			document.getElementById("search-mode").classList.add("mode-keyword");
-			document.getElementById("keyword_search_mode").classList.remove(hide_btn_class);
-			document.getElementById("hashtag_search_mode").classList.add(hide_btn_class);
-			
+			document.getElementById("search-mode").classList.add("hide");
+//			document.getElementById("keyword_search_mode").classList.remove(hide_btn_class);
+//			document.getElementById("hashtag_search_mode").classList.add(hide_btn_class);
+//			
 			return;
 		}
 		
-		//태그 목록 검색
-		if(!document.getElementById("hashtag_search_mode").classList.contains(hide_btn_class)) {
-			var par = "";
-			if(str.length > 0)
-				par = "hashtag=" + str;
-			console.log(par);
-			var ul = document.getElementById("hashtag-list");
-			//URL, SEND, FUC, fuc_PAR, HttpMethod
-		    ajax_getJson(URL_HASHTAG_ALL + "?" + par, null, displayHashtag, ul, 'GET');
-			
-			return;
-		}
+//		//태그 목록 검색
+//		if(!document.getElementById("hashtag_search_mode").classList.contains(hide_btn_class)) {
+//			var par = "";
+//			if(str.length > 0)
+//				par = "hashtag=" + str;
+//			console.log(par);
+//			var ul = document.getElementById("search-list");
+//			//URL, SEND, FUC, fuc_PAR, HttpMethod
+//		    ajax_getJson(URL_HASHTAG_ALL + "?" + par, null, displayHashtag, ul, 'GET');
+//			
+//			return;
+//		}
 	});
 	
 	//메뉴 클릭 이벤트
@@ -415,23 +415,23 @@ function menu_search() {
 	    //팝업 열기
 	    popup_open("search-popup");
 	    //검색창 열기
-	    show_menu("search", "searchbox");
+	    show_menu("searchbox");
     }
     else {
-    	//검색
-    	if(document.getElementById("search_textbox").value.length <= 0) return;
-    	
-    	//키워드 모드
-    	//console.log(document.getElementById("search_textbox").value);
-	    if(document.getElementById("hashtag_search_mode").classList.contains(hide_btn_class)) {
-	    	var keyword = "keyword=" + document.getElementById("search_textbox").value;
-	    	window.location.href = "./search?" + keyword;
-    	}
-    	//해쉬태그 모드
-	    else {
-	    	//var hashtag = "hashtag=" + document.getElementById("search_textbox").value;
-	    	//window.location.href = "./search?" + hashtag;
-	    }
+//    	//검색
+//    	if(document.getElementById("search_textbox").value.length <= 0) return;
+//    	
+//    	//키워드 모드
+//    	//console.log(document.getElementById("search_textbox").value);
+//	    if(document.getElementById("hashtag_search_mode").classList.contains(hide_btn_class)) {
+//	    	var keyword = "keyword=" + document.getElementById("search_textbox").value;
+//	    	window.location.href = "./search?" + keyword;
+//    	}
+//    	//해쉬태그 모드
+//	    else {
+//	    	//var hashtag = "hashtag=" + document.getElementById("search_textbox").value;
+//	    	//window.location.href = "./search?" + hashtag;
+//	    }
     }
 }
 

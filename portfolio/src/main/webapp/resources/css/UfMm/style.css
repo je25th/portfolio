@@ -445,6 +445,8 @@ li.memo-hashtag {
     position: fixed;
     bottom: 3%;
     right: 5%;
+    
+    vertical-align: middle;
 
     cursor: pointer;
     background: var(--themecolor);
@@ -481,6 +483,11 @@ li.memo-hashtag {
 
 .btn-textbox {
     display: inline-block;
+    box-sizing: border-box;
+    
+    text-align: center;
+    vertical-align: middle;
+    margin: 5px;
 }
 
 .btn-back {
@@ -490,34 +497,61 @@ li.memo-hashtag {
     cursor: pointer;
 }
 
-.mode-keyword {
-	/* 폰트 */
-	color: rgba(255, 255, 255, 0.2);
-}
-
 .menu-textbox {
+    box-sizing: border-box;
     display: inline-block;
     background-color: white;
+    
+    padding: 5px;
 	
     height: calc(var(--memusize) - 5px);
-    text-align: center;
+    text-align: left;
     vertical-align: middle;
     
     border-radius: var(--memusize);
     border: 1px solid rgb(255, 151, 169);
 }
 
-input[type="text"].btn-textbox {
+.hashtag-icon {
+    vertical-align: middle;
+    display: inline-block;
+    
+    /* 폰트 */
+    line-height: normal;
+    color: rgba(190, 190, 190, 1);
+    font-size: 1em;
+    line-height: 1;
+}
+
+.display-inline {
+    display: inline-block;
+}
+
+.search-textbox {
     box-sizing: border-box;
-	margin: 8px 0 0 0;
+	/* margin: 8px 0 0 0; */
     background-color: rgba(0, 0, 0, 0); 
-    width: 90%;
     
     /* height: calc(var(--memusize) - 5px);
     vertical-align: middle;
     border-radius: var(--memusize); */
     
     border: 0px;
+}
+
+.btn-addsearch {
+    box-sizing: border-box;
+    display: inline-block;
+    background-color: white;
+    
+    text-align: center;
+    vertical-align: middle;
+    
+    width: calc(var(--memusize) - 5px);
+    height: calc(var(--memusize) - 5px);
+    
+    border-radius: var(--memusize);
+    border: 1px solid rgb(255, 151, 169);
 }
 
 /* write */

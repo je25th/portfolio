@@ -22,29 +22,28 @@
     <div id='search-popup' class='popup-wrap hide'>
 	    <div class="popup-mask"></div>
 	    <div id="popup-content" class="popup-content">
-	    	<!-- 키워드 모드 -->
-	    	<div id="keyword_search_mode">
-		        <div>
-		        	+ 
+	    	<div>
+		        <div id="search_or" class='underbar-wrap'>
+		        	<span class='search-operator'>있거나없거나</span> 
 		        	<span id="star"><i class='icon-star memo-star offcolor'></i></span>
 		        	<span class="memo-wowpoint offcolor"><i class='fas fa-exclamation'></i></span>
 		        	<span class="memo-wowpoint offcolor"><i class='fas fa-exclamation'></i><i class='fas fa-exclamation'></i></span>
 		        	<span class="memo-wowpoint offcolor"><i class='fas fa-exclamation'></i><i class='fas fa-exclamation'></i><i class='fas fa-exclamation'></i></span>
+		        	
 		        </div>
-		        <div>
-		        	x
+		        <div id="search_and" class='underbar-wrap'>
+		        	<span class='search-operator'>포함</span>
+		        	
 		        </div>
-		        <div>
-		        	-
-		        </div>
-		        <div class="search-order">
-		        	정렬순서 <i class="icon-star memo-staroff"></i> ! !! !!!
+		        <div id="search_no" class='underbar-wrap'>
+		        	<span class='search-operator'>제외</span>
+		        	<span id="star"><i class='icon-star memo-star offcolor'></i></span>
+		        	<span class="memo-wowpoint offcolor"><i class='fas fa-exclamation'></i></span>
+		        	<span class="memo-wowpoint offcolor"><i class='fas fa-exclamation'></i><i class='fas fa-exclamation'></i></span>
+		        	<span class="memo-wowpoint offcolor"><i class='fas fa-exclamation'></i><i class='fas fa-exclamation'></i><i class='fas fa-exclamation'></i></span>
+		        	
 		        </div>
 	    	</div>
-	    	<!-- 해쉬태그 모드 -->
-	        <div id="hashtag_search_mode" class="hashtaglist hide">
-	            <ul id="hashtag-list"></ul>
-	        </div>
 	    </div>
 	    
 	    <div class='btn popup-search-btn'><span class='btn-icon'><i class='icon-magnifying'></i></span></div>
@@ -53,7 +52,7 @@
 
 	<nav id='btn-home' class='btn-home hide'><span class='btn btn-icon'><i class="icon-home"></i></span></nav>
     <nav class="btn-wrap">
-        <ul>
+        <ul class='display-inline'>
             <li id='btn-menu' class="btn">
                 <span class='btn-icon'><i class="icon-reorder"></i></span>
             </li>
@@ -61,12 +60,15 @@
                 <span class='btn-icon'><i class="icon-check"></i></span>
             </li>
             <li class='btn-textbox hide'>
-            	<span class='btn btn-icon'><i id='search-mode' class='icon-hashtag mode-keyword'></i></span>
                 <div class="menu-textbox">
-                <form id="menu_textbox">
-                    <input type='text' class='btn-textbox' id='search_textbox'>
-                </form>
+            		<span id='search-mode' class='hashtag-icon hide'><i class='icon-hashtag'></i></span>
+	                <form id="menu_textbox" class='display-inline'>
+	                    <input type='text' class='search-textbox' id='search_textbox'>
+	                </form>
                 </div>
+                <div class='btn-addsearch'>+</div>
+                <div class='btn-addsearch'>x</div>
+                <div class='btn-addsearch'>-</div>
             </li>
             <li id='btn-search' class='btn hide'>
                 <span class='btn-icon'><i class="icon-magnifying"></i></span>
@@ -108,6 +110,7 @@
 
 <script type="text/Javascript" charset="UTF-8" src="${pageContext.request.contextPath}/resources/js/UfMm/common.js"></script>
 <script type="text/Javascript" charset="UTF-8" src="${pageContext.request.contextPath}/resources/js/UfMm/url.js"></script>
+<script type="text/Javascript" charset="UTF-8" src="${pageContext.request.contextPath}/resources/js/UfMm/search.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/UfMm/mainjs.js"></script>
 
 

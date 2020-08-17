@@ -48,7 +48,7 @@ var swipe = false;
 //탭or클릭 중 하나만 되게하기
 var alreadyTaped = false;
 var alreadyClicked = false;
-//탭
+//탭 스위프
 function tapEvt(fuc, right, left) {
 	document.querySelector("body").addEventListener("touchstart", function (e) {
 		tStartEvt = true;
