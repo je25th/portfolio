@@ -2,4 +2,4 @@
 2020.08.01 ~ (진행중)
 
 ### 시연 링크(모바일)
-http://je25th.cafe24.com/login
+http://je25th.cafe24.com/unfolded-memo/login
