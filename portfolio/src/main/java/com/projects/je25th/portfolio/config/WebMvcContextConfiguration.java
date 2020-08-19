@@ -15,7 +15,7 @@ import com.projects.je25th.UfMm.service.AuthCheckInterceptor;
 
 @Configuration//설정 파일임을 알림
 @EnableWebMvc
-@ComponentScan(basePackages = { "com.projects.je25th.UfMm.controller" })//베이스 패키지에서 컨트롤러 찾을것
+@ComponentScan(basePackages = { "com.projects.je25th.NgGg.controller", "com.projects.je25th.UfMm.controller", "com.projects.je25th.portfolio.controller" })//베이스 패키지에서 컨트롤러 찾을것
 public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter {
 
 	@Override
