@@ -17,13 +17,13 @@ import com.projects.je25th.UfMm.dto.Log;
 import com.projects.je25th.UfMm.service.LogService;
 
 @Controller
-@RequestMapping("/gogit")
+//@RequestMapping({"/gogit", "/gogit1", })
 public class GoGitController {
 	
 	@Autowired
 	LogService logService;
 	
-	@GetMapping("/{id}")
+	@GetMapping("gogit/{id}")
 	public String gogit(@PathVariable(name="id")int id, HttpServletRequest request) {
 		
 		Log log = new Log();
@@ -34,6 +34,46 @@ public class GoGitController {
 			log.setMethod("jobkorea");
 		else
 			log.setMethod("whoareyou");
+		logService.writeLog(log);
+		
+//		System.out.println(request.getRemoteAddr());
+//		System.out.println(InetAddress.getLocalHost());
+//		System.out.println(request.getRequestURI());
+//		Enumeration<String> n = request.getHeaderNames();
+//		while(n.hasMoreElements()) {
+//			String name = n.nextElement();
+//			System.out.println(name + ":" + request.getHeader(name));
+//		}
+		
+		return "redirect:https://github.com/oij511/portfolio";
+	}
+	
+	@GetMapping("/gogit1")
+	public String oldGogitS(HttpServletRequest request) {
+		
+		Log log = new Log();
+		log.setIp(request.getHeader("x-real-ip") + "");
+		log.setMethod("saramin(old)");
+		logService.writeLog(log);
+		
+//		System.out.println(request.getRemoteAddr());
+//		System.out.println(InetAddress.getLocalHost());
+//		System.out.println(request.getRequestURI());
+//		Enumeration<String> n = request.getHeaderNames();
+//		while(n.hasMoreElements()) {
+//			String name = n.nextElement();
+//			System.out.println(name + ":" + request.getHeader(name));
+//		}
+		
+		return "redirect:https://github.com/oij511/portfolio";
+	}
+	
+	@GetMapping("/gogit2")
+	public String oldGogitJ(HttpServletRequest request) {
+		
+		Log log = new Log();
+		log.setIp(request.getHeader("x-real-ip") + "");
+		log.setMethod("jobkorea(old)");
 		logService.writeLog(log);
 		
 //		System.out.println(request.getRemoteAddr());

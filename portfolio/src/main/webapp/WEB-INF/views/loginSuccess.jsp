@@ -7,6 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-로그인 성공
+
 </body>
+test
+<script>
+console.log(location);
+</script>
+
 </html>
