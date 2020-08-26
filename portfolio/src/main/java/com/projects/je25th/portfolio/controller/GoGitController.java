@@ -11,13 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.projects.je25th.UfMm.dto.Log;
 import com.projects.je25th.UfMm.service.LogService;
 
 @Controller
-//@RequestMapping({"/gogit", "/gogit1", })
 public class GoGitController {
 	
 	@Autowired
@@ -56,15 +54,6 @@ public class GoGitController {
 		log.setMethod("saramin(old)");
 		logService.writeLog(log);
 		
-//		System.out.println(request.getRemoteAddr());
-//		System.out.println(InetAddress.getLocalHost());
-//		System.out.println(request.getRequestURI());
-//		Enumeration<String> n = request.getHeaderNames();
-//		while(n.hasMoreElements()) {
-//			String name = n.nextElement();
-//			System.out.println(name + ":" + request.getHeader(name));
-//		}
-		
 		return "redirect:https://github.com/oij511/portfolio";
 	}
 	
@@ -75,15 +64,6 @@ public class GoGitController {
 		log.setIp(request.getHeader("x-real-ip") + "");
 		log.setMethod("jobkorea(old)");
 		logService.writeLog(log);
-		
-//		System.out.println(request.getRemoteAddr());
-//		System.out.println(InetAddress.getLocalHost());
-//		System.out.println(request.getRequestURI());
-//		Enumeration<String> n = request.getHeaderNames();
-//		while(n.hasMoreElements()) {
-//			String name = n.nextElement();
-//			System.out.println(name + ":" + request.getHeader(name));
-//		}
 		
 		return "redirect:https://github.com/oij511/portfolio";
 	}

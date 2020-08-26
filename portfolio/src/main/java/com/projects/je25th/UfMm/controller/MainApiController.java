@@ -52,7 +52,7 @@ public class MainApiController {
 	
 	@GetMapping("/hashtag")
 	public AjaxJson sendAllHashtag(@RequestParam(required=false) String hashtag, HttpSession session) {
-		System.out.println("[UfMm] hashtag/all?hashtag=" + hashtag + " Get");
+		System.out.println("[UfMm] hashtag?hashtag=" + hashtag + " Get");
 		
 		AuthInfo authInfo = MyUtill.getAuthInfo(session);
 		
@@ -68,5 +68,16 @@ public class MainApiController {
 		AjaxJson send = new AjaxJson(result==null? false : true, result);
 		return send;
 	}
+	
+	@GetMapping("/search/{keyword}/{page}")
+	public AjaxJson searchByKeyword(@PathVariable(name="keyword")String keyword, @PathVariable(name="page")int page, HttpSession session) {
+		System.out.println("[UfMm] search/" + keyword + "/" + page + " Get");
 		
+		AuthInfo authInfo = MyUtill.getAuthInfo(session);
+		
+		//json으로 메모 리스트를 보내기
+		List<Memo> result = memoService.viewMemoByKeyword(authInfo.getIdx(), keyword, page);
+		AjaxJson send = new AjaxJson(result==null? false : true, result);
+		return send;
+	}
 }

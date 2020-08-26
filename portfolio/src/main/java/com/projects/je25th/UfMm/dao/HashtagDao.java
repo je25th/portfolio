@@ -64,6 +64,13 @@ public class HashtagDao {
 		return results;
 	}
 	
+	public List<Hashtag> selectCountByHashtagIdx() {
+		List<Hashtag> results = jdbc.query("SELECT hashtag_idx AS idx, COUNT(*) AS count " 
+											+ "FROM memo_has_hashtag GROUP BY hashtag_idx"
+											, rowMapper);
+		return results;
+	}
+	
 	public int insert(Hashtag hashtag) {
 		SqlParameterSource params = new BeanPropertySqlParameterSource(hashtag);
 		return insertAction.executeAndReturnKey(params).intValue();
@@ -72,6 +79,15 @@ public class HashtagDao {
 	public boolean update(Hashtag hashtag) {
 		//TODO ::
 		return false;
+	}
+	
+	public boolean updateCount(Hashtag hashtag) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("hashtagIdx", hashtag.getIdx());
+		params.put("count", hashtag.getCount());
+		int result = jdbc.update("UPDATE hashtag SET count= :count WHERE idx = :hashtagIdx", params);
+		
+		return result>0? true : false;
 	}
 	
 	public boolean countUp(int hashtagIdx) {

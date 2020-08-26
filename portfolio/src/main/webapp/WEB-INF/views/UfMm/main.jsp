@@ -17,38 +17,6 @@
 <div class="container">
     <div id="momo-container" class="momo-container">
     </div>
-    
-    <!-- 팝업메뉴 시작 -->
-    <div id='search-popup' class='popup-wrap hide'>
-	    <div class="popup-mask"></div>
-	    <div id="popup-content" class="popup-content">
-	    	<div>
-		        <div id="search_or" class='underbar-wrap'>
-		        	<span class='search-operator'>있거나없거나</span> 
-		        	<span id="star"><i class='icon-star memo-star offcolor'></i></span>
-		        	<span class="memo-wowpoint offcolor"><i class='fas fa-exclamation'></i></span>
-		        	<span class="memo-wowpoint offcolor"><i class='fas fa-exclamation'></i><i class='fas fa-exclamation'></i></span>
-		        	<span class="memo-wowpoint offcolor"><i class='fas fa-exclamation'></i><i class='fas fa-exclamation'></i><i class='fas fa-exclamation'></i></span>
-		        	
-		        </div>
-		        <div id="search_and" class='underbar-wrap'>
-		        	<span class='search-operator'>포함</span>
-		        	
-		        </div>
-		        <div id="search_no" class='underbar-wrap'>
-		        	<span class='search-operator'>제외</span>
-		        	<span id="star"><i class='icon-star memo-star offcolor'></i></span>
-		        	<span class="memo-wowpoint offcolor"><i class='fas fa-exclamation'></i></span>
-		        	<span class="memo-wowpoint offcolor"><i class='fas fa-exclamation'></i><i class='fas fa-exclamation'></i></span>
-		        	<span class="memo-wowpoint offcolor"><i class='fas fa-exclamation'></i><i class='fas fa-exclamation'></i><i class='fas fa-exclamation'></i></span>
-		        	
-		        </div>
-	    	</div>
-	    </div>
-	    
-	    <div class='btn popup-search-btn'><span class='btn-icon'><i class='icon-magnifying'></i></span></div>
-    </div>
-    <!-- 팝업메뉴 끝 -->
 
 	<nav id='btn-home' class='btn-home hide'><span class='btn btn-icon'><i class="icon-home"></i></span></nav>
     <nav class="btn-wrap">
@@ -58,17 +26,6 @@
             </li>
             <li id='btn-check' class='btn hide'>
                 <span class='btn-icon'><i class="icon-check"></i></span>
-            </li>
-            <li class='btn-textbox hide'>
-                <div class="menu-textbox">
-            		<span id='search-mode' class='hashtag-icon hide'><i class='icon-hashtag'></i></span>
-	                <form id="menu_textbox" class='display-inline'>
-	                    <input type='text' class='search-textbox' id='search_textbox'>
-	                </form>
-                </div>
-                <div class='btn-addsearch'>+</div>
-                <div class='btn-addsearch'>x</div>
-                <div class='btn-addsearch'>-</div>
             </li>
             <li id='btn-search' class='btn hide'>
                 <span class='btn-icon'><i class="icon-magnifying"></i></span>
@@ -88,6 +45,33 @@
         </ul>
     </nav>
     
+    <!-- 서치 팝업메뉴 시작 -->
+    <div id='search-popup' class='popup-wrap hide'>
+	    <div class="popup-mask"></div>
+	    <div id="popup-content" class="popup-search">
+	    	<ul id="search-popup-close" class="long-close-btn-wrap">
+	    		<li class="long-close-btn"></li>
+	    	</ul>
+	    	<div class="popup-search-inner-wrap">
+		    	 <form id="menu_textbox" action="/unfolded-memo/search">
+	            	<!-- <span id='hashtag-mode' class='hashtag-icon hide'><i class='icon-hashtag'></i></span>
+	            	<span id='keyword-mode' class=''>k</span> -->
+		            <input type='text' name='keyword' id='search_textbox' class='popup-textbox' placeholder="검색어">
+	                <button type="submit"><span class="popup-search-btn"><i class="icon-magnifying"></i></span></button>
+	             </form>
+	             <div>
+		             <span class="popup-search-title">내 해쉬태그 목록</span>
+		             <ul id="search-hashtag-list"></ul>
+	             </div>
+	             <div>
+		             <span class="popup-search-title">검색기록</span>
+		             <ul id="search-cookies-list"></ul>
+	             </div>
+	    	</div>
+	    </div>
+    </div>
+    <!-- 서치 팝업메뉴 끝 -->
+    
     <!-- 삭제확인 팝업 시작 -->
     <div id='delete-popup' class='popup-wrap hide'>
 	    <div class='popup-mask'></div>
@@ -99,8 +83,8 @@
 	    		</div>
 	    	</div>
 	    	<div class='popup-delete-btn'>
-	    		<button id='popup-btn-cancel' class='popup-delete-btn-cancel'>취소</button>
-	    		<button id='popup-btn-delete' class='popup-delete-btn-delete'>삭제</button>
+	    		<button id='popup-btn-cancel' class='btn-default popup-delete-btn-cancel'>취소</button>
+	    		<button id='popup-btn-delete' class='btn-default popup-delete-btn-delete'>삭제</button>
 	    	</div>
 	    </div>
     </div>
@@ -111,6 +95,7 @@
 <script type="text/Javascript" charset="UTF-8" src="${pageContext.request.contextPath}/resources/js/UfMm/common.js"></script>
 <script type="text/Javascript" charset="UTF-8" src="${pageContext.request.contextPath}/resources/js/UfMm/url.js"></script>
 <script type="text/Javascript" charset="UTF-8" src="${pageContext.request.contextPath}/resources/js/UfMm/search.js"></script>
+<script type="text/Javascript" charset="UTF-8" src="${pageContext.request.contextPath}/resources/js/UfMm/menu.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/UfMm/mainjs.js"></script>
 
 

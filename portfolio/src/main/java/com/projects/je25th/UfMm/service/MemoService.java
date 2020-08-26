@@ -55,6 +55,16 @@ public class MemoService {
 	}
 	
 	@Transactional(readOnly=true)
+	public List<Memo> viewMemoByKeyword(int userIdx, String keyword, int page) {
+		return memoDao.selectByKeyword(userIdx, keyword, page);
+	}
+	
+	@Transactional(readOnly=true)
+	public List<Memo> viewMemoByHashtag(int userIdx, Hashtag hashtag) {
+		return memoDao.selectByHashtag(userIdx, hashtag);
+	}
+	
+	@Transactional(readOnly=true)
 	public List<Hashtag> getAllHashtag(int userIdx) {
 		return hashtagDao.selectByUserIdx(userIdx);
 	}
@@ -206,6 +216,15 @@ public class MemoService {
 		}
 		
 		return star;
+	}
+	
+	@Transactional(rollbackFor={Exception.class})
+	public void allHashtagCountReset() {
+		//hashtag의 count열 재계산
+		List<Hashtag> ht = hashtagDao.selectCountByHashtagIdx();
+		for(int i=0; i<ht.size(); i++) {
+			hashtagDao.updateCount(ht.get(i));
+		}
 	}
 	
 }

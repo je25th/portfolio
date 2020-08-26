@@ -65,16 +65,24 @@ public class MemoDao {
 		return results.isEmpty() ? null : results.get(0);
 	}
 	
-	public List<Memo> selectByHashtag(int userIdx, List<Hashtag> hashtaglist) {
+	public List<Memo> selectByHashtag(int userIdx, Hashtag hashtag) {
 		//TODO ::
 		
 		return null;
 	}
 	
-	public List<Memo> selectByKeyword(int userIdx, String keyword) {
+	public List<Memo> selectByKeyword(int userIdx, String keyword, int page) {
 		//TODO ::
 		//"SELECT * FROM memo WHERE user_idx = :userIdx AND (content LIKE '%:keyword%' OR title LIKE'%:keyword%') ORDER BY mdate DESC LIMIT :page , 10"
-		return null;
+		Map<String, Object> params = new HashMap<>();
+		params.put("userIdx", userIdx);
+		params.put("keyword", "%" + keyword + "%");//LIKE는 이렇게 써야한다!!!!!
+		params.put("page", (page-1)*10);
+		List<Memo> results = jdbc.query("SELECT * FROM memo " 
+											+ "WHERE user_idx = :userIdx AND (content LIKE :keyword OR title LIKE :keyword) ORDER BY mdate DESC LIMIT :page, 10"
+											, params
+											, rowMapper);
+		return results;
 	}
 	
 	public int insert(Memo memo) {

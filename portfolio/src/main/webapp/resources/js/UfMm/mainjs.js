@@ -1,15 +1,12 @@
 /**
  * main
  */
-var menu_wrap = document.querySelector(".btn-wrap");
-var menu = menu_wrap.firstElementChild; 
 var ori_wid = "50px";
 var wid = "90%";
 
 var hashtagId = "hashtag_id";
 var hide_btn_class = "hide";
 
-var isDisplayHashtag = 0;//해쉬태그 불러왔는지 확인용
 var lastScrollTop = 0;//메뉴닫기할때 필요
 
 var page = 1;
@@ -27,7 +24,7 @@ function loadmemo() {
 		ajax_getJson(URL_MAIN + '/' + page, null, displayMemolist, null, 'GET');
 	}
 	else if(location.pathname == URL_SEARCH) {
-		//뒤로가기 버튼(main으로)
+		//홈 버튼(main으로)
 		var home = document.getElementById("btn-home");
 		home.addEventListener("click", function() {
 			window.location.href = URL_MAIN;
@@ -35,8 +32,9 @@ function loadmemo() {
 		//뒤로가기 버튼 켬
 		home.classList.remove(hide_btn_class);
 		
+		
 		//URL, SEND, FUC, fuc_PAR, HttpMethod
-		ajax_getJson(URL_SEARCH + "/" + page , null, displayMemolist, null, 'GET');
+		ajax_getJson(URL_SEARCH + "/" + location.search.replace("?keyword=", "") + "/" + page , null, displayMemolist, null, 'GET');
 	}
 	else if(location.pathname == URL_STAR) {
 		//뒤로가기 버튼(main으로)
@@ -91,7 +89,7 @@ function addMenuEvt() {
 				SelectedArticle.parentElement.removeChild(SelectedArticle);
 				
 				//팝업닫기
-				popup_close("delete-popup");
+				deletePopupClose();
 				SelectedArticle = null;
 			    //article_btn_close(SelectedArticle);
 			}, null, 'DELETE');
@@ -102,7 +100,7 @@ function addMenuEvt() {
 		}
 		//취소버튼 클릭
 		if(p.id == "popup-btn-cancel" || p.id == "popup-btn-delete") {
-			popup_close("delete-popup");
+			deletePopupClose();
 		    article_btn_close(SelectedArticle);
 		}
 		
@@ -113,7 +111,7 @@ function addMenuEvt() {
 		    return;
 		}
 		if(p == document.getElementById("delete-popup").firstElementChild) {			
-		    popup_close("delete-popup");
+			deletePopupClose();
 		    article_btn_close(SelectedArticle);
 		    
 		    return;
@@ -127,7 +125,7 @@ function addMenuEvt() {
 			if(p.localName == "article") {
 				//스위프 삭제버튼
 				if(e.target.className == "swipe-delete" || (e.target.parentElement != null && e.target.parentElement.className == "swipe-delete")) {
-					popup_open("delete-popup");
+					deletePopupOpen();
 					console.log(p.id + " delete");
 					SelectedArticle = p;
 					
@@ -238,159 +236,16 @@ function addMenuEvt() {
 //		console.log("clientHeight + scrollTop:" + (e.target.scrollingElement.scrollTop + e.target.scrollingElement.clientHeight));
 	})
 	
-	
 	//태그 서치 텍스트박스 이벤트
-	document.getElementById("search_textbox").addEventListener("keyup", function(e) {
-		var str = e.srcElement.value;
-		
-		//모드체인지
-//		//해쉬태그 모드
-		if(str == "#"){
-			console.log("hashtag_search_mode");
-			e.srcElement.value = "";
-			document.getElementById("search-mode").classList.remove("hide");
-//			document.getElementById("keyword_search_mode").classList.add(hide_btn_class);
-//			document.getElementById("hashtag_search_mode").classList.remove(hide_btn_class);
-//			
-			return;
-		}
-//		//키워드 모드
-		else if(str == "k" || str == "K") {
-			e.srcElement.value = "";
-			document.getElementById("search-mode").classList.add("hide");
-//			document.getElementById("keyword_search_mode").classList.remove(hide_btn_class);
-//			document.getElementById("hashtag_search_mode").classList.add(hide_btn_class);
-//			
-			return;
-		}
-		
-//		//태그 목록 검색
-//		if(!document.getElementById("hashtag_search_mode").classList.contains(hide_btn_class)) {
-//			var par = "";
-//			if(str.length > 0)
-//				par = "hashtag=" + str;
-//			console.log(par);
-//			var ul = document.getElementById("search-list");
-//			//URL, SEND, FUC, fuc_PAR, HttpMethod
-//		    ajax_getJson(URL_HASHTAG_ALL + "?" + par, null, displayHashtag, ul, 'GET');
-//			
-//			return;
-//		}
-	});
+	searchBoxKeyupEvt();
 	
 	//메뉴 클릭 이벤트
-    var li = menu.children;
-    li[0].addEventListener("click", function() {
-        menu_open();
-
-        lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    });
-    li[1].addEventListener("click", function() {
-        menu_check();
-    });
-    li[3].addEventListener("click", function() {
-        menu_search();
-    });
-    li[4].addEventListener("click", function() {
-        menu_star();
-    });
-    li[5].addEventListener("click", function() {
-        menu_box();
-    });
-    li[6].addEventListener("click", function() {
-        menu_logout();
-    });
-    li[7].addEventListener("click", function() {
-        menu_write();
-    });
-
+	menuClickEvt();
 }
 
-function select_menu(n) {
-	var li_num;
-	switch(n) {
-		case "menu" :
-			li_num = 0;
-			break;
-		case "check" :
-			li_num = 1;
-			break;
-		case "searchbox" :
-			li_num = 2;
-			break;
-		case "search" :
-			li_num = 3;
-			break;
-		case "star" :
-			li_num = 4;
-			break;
-		case "box" :
-			li_num = 5;
-			break;
-		case "logout" :
-			li_num = 6;
-			break;
-		case "write" :
-			li_num = 7;
-			break;
-	}
-	
-	return li_num;
-}
-
-function hide_menu(n) {
-	var li_num = select_menu(n);
-	var li_num2 = select_menu("searchbox");
-	
-	var li = menu.children;
-    for(var i=0; i<li.length; i++)
-    {
-    	if(li_num == i || li_num2 == i) {
-    		li[i].classList.add(hide_btn_class);
-    		continue;
-		}
-    	
-        li[i].classList.remove(hide_btn_class);
-    }
-}
-
-function show_menu(n, n2) {
-	var li_num = select_menu(n);
-	var li_num2 = select_menu(n2);
-	
-	var li = menu.children;
-    for(var i=0; i<li.length; i++)
-    {
-    	if(li_num == i || li_num2 == i) {
-    		li[i].classList.remove(hide_btn_class);
-    		continue;
-		}
-    	
-        li[i].classList.add(hide_btn_class);
-    }
-}
-
-function menu_open() {
-    if(menu_wrap.style.width === wid) return;
-
-    menu_wrap.style.width = wid;
-
-    hide_menu("menu");
-}
-
-function menu_close() {
-    if(menu_wrap.style.width === ori_wid) return;
-    //팝업
-    popup_close("search-popup");
-
-    menu_wrap.style.width = ori_wid;
-
-    show_menu("menu");
-}
-
-function popup_open(popupwindow) {
+function deletePopupOpen() {
     //마스크 켬
-    var popup = document.getElementById(popupwindow);
+    var popup = document.getElementById("delete-popup");
     popup.classList.add("popup-show");
     popup.classList.remove(hide_btn_class);
     //팝업창 켬
@@ -398,71 +253,14 @@ function popup_open(popupwindow) {
 //    popup.classList.add("popup-show");
 }
 
-function popup_close(popupwindow) {
+function deletePopupClose() {
     //마스크
-    var popup = document.getElementById(popupwindow);
+    var popup = document.getElementById("delete-popup");
     popup.classList.remove("popup-show");
     popup.classList.add(hide_btn_class);
     //팝업창
 //    popup = document.getElementById("popup-content");
 //    popup.classList.remove("popup-show");
-}
-
-function menu_search() {
-    if(menu_wrap.style.width === ori_wid) return;
-
-    if(!document.getElementById("popup-content").classList.contains("popup-show")) {
-	    //팝업 열기
-	    popup_open("search-popup");
-	    //검색창 열기
-	    show_menu("searchbox");
-    }
-    else {
-//    	//검색
-//    	if(document.getElementById("search_textbox").value.length <= 0) return;
-//    	
-//    	//키워드 모드
-//    	//console.log(document.getElementById("search_textbox").value);
-//	    if(document.getElementById("hashtag_search_mode").classList.contains(hide_btn_class)) {
-//	    	var keyword = "keyword=" + document.getElementById("search_textbox").value;
-//	    	window.location.href = "./search?" + keyword;
-//    	}
-//    	//해쉬태그 모드
-//	    else {
-//	    	//var hashtag = "hashtag=" + document.getElementById("search_textbox").value;
-//	    	//window.location.href = "./search?" + hashtag;
-//	    }
-    }
-}
-
-function menu_star() {
-    if(menu_wrap.style.width === ori_wid) return;
-
-    window.location.href = URL_STAR;
-}
-
-function menu_check() {
-    if(menu_wrap.style.width === ori_wid) return;
-
-}
-
-function menu_logout() {
-    if(menu_wrap.style.width !== wid) return;
-
-    window.location.href = URL_LOGIN;
-}
-
-function menu_box() {
-    if(menu_wrap.style.width !== wid) return;
-	
-}
-
-function menu_write() {
-    if(menu_wrap.style.widthh === ori_wid) return;
-    
-    //console.log("write");
-    window.location.href = URL_WRITE;
-    //window.location.replace("./write");//이건 뒤로가기 누르면 이상한것같음
 }
 
 function addEvt_star(id, func) {
@@ -473,20 +271,6 @@ function addEvt_star(id, func) {
 //*********************
 //여기부터 화면에 뿌리는 함수들 모음
 //*********************
-//해쉬태그
-function displayHashtag (ul, parsedJSON) {
-	var hashtagList = parsedJSON;
-	var h;
-	ul.innerHTML = "";
-	hashtagList.forEach(function(data) {
-//		if(document.getElementById(selectedId + data.idx) != null)
-//			h = " " + hide_class;
-//		else
-//			h = ""
-		ul.innerHTML += "<li id='" + hashtagId + data.idx + "' class='hashtag hashtag-unselected inline'>#" + data.hashtag + 
-						"<span class='hashtag_count'>| " + data.count + "</span></li>";
-	});
-}
 
 //메모 화면에 뿌리기
 function displayMemolist (dom, parsedJSON) {
