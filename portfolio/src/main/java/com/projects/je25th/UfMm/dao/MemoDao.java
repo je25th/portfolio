@@ -65,15 +65,26 @@ public class MemoDao {
 		return results.isEmpty() ? null : results.get(0);
 	}
 	
-	public List<Memo> selectByHashtag(int userIdx, Hashtag hashtag) {
-		//TODO ::
+	//10개씩 끊어서 가져옴
+	public List<Memo> selectByHashtagIdx(int userIdx, int hashtagIdx, int page) {
+		//TODO :: join어쩌구가 필요
+		Map<String, Object> params = new HashMap<>();
+		params.put("userIdx", userIdx);
+		params.put("hashtagIdx", hashtagIdx);
+		params.put("page", (page-1)*10);
+		List<Memo> results = 
+		jdbc.query("SELECT memo.idx, memo.user_idx, memo.title, memo.content, memo.hashtag, memo.colorbar, memo.wowpoint, memo.star, memo.wdate, memo.mdate, memo.fold, memo.box FROM memo " 
+				+ "LEFT JOIN memo_has_hashtag ON memo.idx=memo_has_hashtag.memo_idx " 
+				+ "INNER JOIN hashtag ON memo_has_hashtag.hashtag_idx=hashtag.idx " 
+				+ "WHERE memo.user_idx = :userIdx AND hashtag.idx= :hashtagIdx ORDER BY mdate DESC LIMIT :page, 10"
+				, params
+				, rowMapper);
 		
-		return null;
+		return results;
 	}
 	
+	//10개씩 끊어서 가져옴
 	public List<Memo> selectByKeyword(int userIdx, String keyword, int page) {
-		//TODO ::
-		//"SELECT * FROM memo WHERE user_idx = :userIdx AND (content LIKE '%:keyword%' OR title LIKE'%:keyword%') ORDER BY mdate DESC LIMIT :page , 10"
 		Map<String, Object> params = new HashMap<>();
 		params.put("userIdx", userIdx);
 		params.put("keyword", "%" + keyword + "%");//LIKE는 이렇게 써야한다!!!!!

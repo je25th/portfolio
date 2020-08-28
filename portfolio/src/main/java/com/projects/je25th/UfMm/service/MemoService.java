@@ -55,13 +55,13 @@ public class MemoService {
 	}
 	
 	@Transactional(readOnly=true)
-	public List<Memo> viewMemoByKeyword(int userIdx, String keyword, int page) {
+	public List<Memo> viewMemoListByKeyword(int userIdx, String keyword, int page) {
 		return memoDao.selectByKeyword(userIdx, keyword, page);
 	}
 	
 	@Transactional(readOnly=true)
-	public List<Memo> viewMemoByHashtag(int userIdx, Hashtag hashtag) {
-		return memoDao.selectByHashtag(userIdx, hashtag);
+	public List<Memo> viewMemoListByHashtagIdx(int userIdx, int hashtagIdx, int page) {
+		return memoDao.selectByHashtagIdx(userIdx, hashtagIdx, page);
 	}
 	
 	@Transactional(readOnly=true)

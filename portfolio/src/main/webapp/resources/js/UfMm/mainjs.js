@@ -4,7 +4,6 @@
 var ori_wid = "50px";
 var wid = "90%";
 
-var hashtagId = "hashtag_id";
 var hide_btn_class = "hide";
 
 var lastScrollTop = 0;//메뉴닫기할때 필요
@@ -32,9 +31,21 @@ function loadmemo() {
 		//뒤로가기 버튼 켬
 		home.classList.remove(hide_btn_class);
 		
-		
 		//URL, SEND, FUC, fuc_PAR, HttpMethod
 		ajax_getJson(URL_SEARCH + "/" + location.search.replace("?keyword=", "") + "/" + page , null, displayMemolist, null, 'GET');
+	}
+	else if(location.pathname == URL_SERACH_HASHTAG) {
+		//홈 버튼(main으로)
+		var home = document.getElementById("btn-home");
+		home.addEventListener("click", function() {
+			window.location.href = URL_MAIN;
+		});
+		//뒤로가기 버튼 켬
+		home.classList.remove(hide_btn_class);
+		
+		//URL, SEND, FUC, fuc_PAR, HttpMethod
+		ajax_getJson(URL_SERACH_HASHTAG + "/" + location.search.replace("?hashtag=", "") + "/" + page , null, displayMemolist, null, 'GET');
+	
 	}
 	else if(location.pathname == URL_STAR) {
 		//뒤로가기 버튼(main으로)
@@ -104,12 +115,15 @@ function addMenuEvt() {
 		    article_btn_close(SelectedArticle);
 		}
 		
-		//팝업닫기
+		//서치 팝업 닫기
 		if(p == document.getElementById("search-popup").firstElementChild) {
-		    menu_close();
+			searchPopupClose()
+			menu_close();
 		    
 		    return;
 		}
+		
+		//삭제 팝업 닫기
 		if(p == document.getElementById("delete-popup").firstElementChild) {			
 			deletePopupClose();
 		    article_btn_close(SelectedArticle);
@@ -159,10 +173,8 @@ function addMenuEvt() {
 			}
 			
 			//해쉬태그 선택 -> 검색창
-			if(p.id.indexOf(hashtagId) >= 0) {
-				var hashtag = "hashtag=" + p.id.replace(hashtagId, "");
-		    	window.location.href = "./search?" + hashtag;
-			}
+			if(hashtagListClickEvt(p))
+				return;
 		}
 		
 		
@@ -236,8 +248,11 @@ function addMenuEvt() {
 //		console.log("clientHeight + scrollTop:" + (e.target.scrollingElement.scrollTop + e.target.scrollingElement.clientHeight));
 	})
 	
-	//태그 서치 텍스트박스 이벤트
+	//서치 팝업 텍스트박스 이벤트
 	searchBoxKeyupEvt();
+	
+	//서치 팝업 닫기
+	//는 위에 있음
 	
 	//메뉴 클릭 이벤트
 	menuClickEvt();

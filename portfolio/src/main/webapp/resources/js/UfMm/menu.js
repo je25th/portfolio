@@ -114,6 +114,8 @@ function menu_search() {
     if(!document.getElementById("popup-content").classList.contains("popup-show")) {
 	    //팝업 열기
     	searchPopupOpen();
+    	//메뉴는 닫기
+    	menu_close();
     }
 }
 

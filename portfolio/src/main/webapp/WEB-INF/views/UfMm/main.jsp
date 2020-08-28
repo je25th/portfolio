@@ -53,7 +53,7 @@
 	    		<li class="long-close-btn"></li>
 	    	</ul>
 	    	<div class="popup-search-inner-wrap">
-		    	 <form id="menu_textbox" action="/unfolded-memo/search">
+		    	 <form id="menu_textbox" action="/portfolio/unfolded-memo/search">
 	            	<!-- <span id='hashtag-mode' class='hashtag-icon hide'><i class='icon-hashtag'></i></span>
 	            	<span id='keyword-mode' class=''>k</span> -->
 		            <input type='text' name='keyword' id='search_textbox' class='popup-textbox' placeholder="검색어">

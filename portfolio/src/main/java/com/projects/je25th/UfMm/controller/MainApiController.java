@@ -76,7 +76,19 @@ public class MainApiController {
 		AuthInfo authInfo = MyUtill.getAuthInfo(session);
 		
 		//json으로 메모 리스트를 보내기
-		List<Memo> result = memoService.viewMemoByKeyword(authInfo.getIdx(), keyword, page);
+		List<Memo> result = memoService.viewMemoListByKeyword(authInfo.getIdx(), keyword, page);
+		AjaxJson send = new AjaxJson(result==null? false : true, result);
+		return send;
+	}
+	
+	@GetMapping("/search/hashtag/{hashtagIdx}/{page}")
+	public AjaxJson searchByHashtag(@PathVariable(name="hashtagIdx")int hashtagIdx, @PathVariable(name="page")int page, HttpSession session) {
+		System.out.println("[UfMm] search/hashtag/" + hashtagIdx + "/" + page + " Get");
+		
+		AuthInfo authInfo = MyUtill.getAuthInfo(session);
+		
+		//json으로 메모 리스트를 보내기
+		List<Memo> result = memoService.viewMemoListByHashtagIdx(authInfo.getIdx(), hashtagIdx, page);
 		AjaxJson send = new AjaxJson(result==null? false : true, result);
 		return send;
 	}

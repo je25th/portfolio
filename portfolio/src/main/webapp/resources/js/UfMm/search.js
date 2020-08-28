@@ -1,10 +1,18 @@
 /**
  * main.jsp의 서치 팝업에 관련된 함수들
+ * 모바일버전과 PC버전 공통으로 쓸 수 있도록하기
  */
+
+//jsp 템플릿의 id를 아래와 같이 맞출것
+var hashtagId = "hashtag_id";//얘는 템플릿에서 안맞춤
+var searchInputTextId = "search_textbox";//서치텍스트박스의 아이디
+
+//jsp 템플릿의 class 이름을 아래와 같이 맞출것
+var hide_class = "hide";//숨기기
 
 //태그 서치 텍스트박스 이벤트
 function searchBoxKeyupEvt() {
-	document.getElementById("search_textbox").addEventListener("keyup", function(e) {
+	document.getElementById(searchInputTextId).addEventListener("keyup", function(e) {
 		var str = e.srcElement.value;
 		
 //		//모드체인지
@@ -14,8 +22,8 @@ function searchBoxKeyupEvt() {
 //			e.srcElement.value = "";
 //			document.getElementById("hashtag-mode").classList.remove("hide");
 //			document.getElementById("keyword-mode").classList.add("hide");
-////			document.getElementById("keyword_search_mode").classList.add(hide_btn_class);
-////			document.getElementById("hashtag_search_mode").classList.remove(hide_btn_class);
+////			document.getElementById("keyword_search_mode").classList.add(hide_class);
+////			document.getElementById("hashtag_search_mode").classList.remove(hide_class);
 ////			
 //			return;
 //		}
@@ -24,8 +32,8 @@ function searchBoxKeyupEvt() {
 //			e.srcElement.value = "";
 //			document.getElementById("hashtag-mode").classList.add("hide");
 //			document.getElementById("keyword-mode").classList.remove("hide");
-////			document.getElementById("keyword_search_mode").classList.remove(hide_btn_class);
-////			document.getElementById("hashtag_search_mode").classList.add(hide_btn_class);
+////			document.getElementById("keyword_search_mode").classList.remove(hide_class);
+////			document.getElementById("hashtag_search_mode").classList.add(hide_class);
 ////			
 //			return;
 //		}
@@ -35,19 +43,50 @@ function searchBoxKeyupEvt() {
 	});
 }
 
-//검색버튼 클릭
-function searchBtnClickEvt() {
-	document.getElementById("search_textbox").addEventListener("keyup", function(e) {
-		
-	});
-}
-
 //해쉬태그를 클릭하면 바로 그 해쉬태그로 검색됨
-function hashtagListClickEvt() {
+function hashtagListClickEvt(e) {
+	//해쉬태그 선택 -> 검색창
+	if(e.id.indexOf(hashtagId) >= 0) {
+		var hashtag = "hashtag=" + e.id.replace(hashtagId, "");
+    	window.location.href = URL_SERACH_HASHTAG + "?" + hashtag;
+    	
+    	return true;
+	}
+	else if(e.parentElement != null && e.parentElement.id.indexOf(hashtagId) >= 0) {
+		var hashtag = "hashtag=" + e.parentElement.id.replace(hashtagId, "");
+    	window.location.href = URL_SERACH_HASHTAG + "?" + hashtag;
+		
+		return true;
+	}
 	
+	return false;
 }
 
-//태그 목록 검색
+//서치 팝업 열기
+function searchPopupOpen() {
+	//태그 목록 가져오기
+	findHashtagList("");
+    //마스크 켬
+    var popup = document.getElementById("search-popup");
+    popup.classList.add("popup-show");
+    popup.classList.remove(hide_class);
+    //팝업창 켬
+//    popup = document.getElementById(popupwindow);
+//    popup.classList.add("popup-show");
+}
+
+//서치 팝업 닫기
+function searchPopupClose() {
+    //마스크
+    var popup = document.getElementById("search-popup");
+    popup.classList.remove("popup-show");
+    popup.classList.add(hide_class);
+    //팝업창
+//    popup = document.getElementById("popup-content");
+//    popup.classList.remove("popup-show");
+}
+
+//태그 목록 가져오기
 function findHashtagList(str) {
 	var par = "";
 	if(str.length > 0)
@@ -55,39 +94,17 @@ function findHashtagList(str) {
 	console.log(par);
 	var ul = document.getElementById("search-hashtag-list");
 	//URL, SEND, FUC, fuc_PAR, HttpMethod
-    ajax_getJson(URL_HASHTAG_ALL + "?" + par, null, displayHashtag, ul, 'GET');
+  ajax_getJson(URL_HASHTAG_ALL + "?" + par, null, displayHashtag, ul, 'GET');
 }
 
-function searchPopupOpen() {
-	//태그 목록 가져오기
-	findHashtagList("");
-    //마스크 켬
-    var popup = document.getElementById("search-popup");
-    popup.classList.add("popup-show");
-    popup.classList.remove(hide_btn_class);
-    //팝업창 켬
-//    popup = document.getElementById(popupwindow);
-//    popup.classList.add("popup-show");
-}
-
-function searchPopupClose() {
-    //마스크
-    var popup = document.getElementById("search-popup");
-    popup.classList.remove("popup-show");
-    popup.classList.add(hide_btn_class);
-    //팝업창
-//    popup = document.getElementById("popup-content");
-//    popup.classList.remove("popup-show");
-}
-
-//해쉬태그
+//해쉬태그 불러온것 뿌리기
 function displayHashtag (ul, parsedJSON) {
 	var hashtagList = parsedJSON;
 	var h;
 	ul.innerHTML = "";
 	hashtagList.forEach(function(data) {
-		ul.innerHTML += "<li id='" + hashtagId + data.idx + "' class='hashtag hashtag-unselected inline'>#" + data.hashtag + 
-						"<span class='hashtag_count'>| " + data.count + "</span></li>";
+		ul.innerHTML += "<li id='" + hashtagId + data.idx + "' class='hashtag hashtag-unselected inline'><span>#" + data.hashtag + 
+						"</span><span class='hashtag_count'>| " + data.count + "</span></li>";
 	});
 }
 

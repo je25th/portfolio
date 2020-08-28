@@ -75,9 +75,16 @@ public class MainController {
 	public String search(@RequestParam(required=false) String keyword, HttpSession session) {
 		System.out.println("[UfMm] search?keyword=" + keyword + " Get");
 		
-		AuthInfo authInfo = MyUtill.getAuthInfo(session);
-		
 		System.out.println(keyword);
+		
+		return "UfMm/main";
+	}
+	
+	@GetMapping("/search/hashtag")
+	public String hashtag(@RequestParam(required=false) String hashtag, HttpSession session) {
+		System.out.println("[UfMm] search/hashtag?hashtag=" + hashtag + " Get");
+		
+		System.out.println(hashtag);
 		
 		return "UfMm/main";
 	}
