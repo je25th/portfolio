@@ -105,6 +105,15 @@
 		<artifactId>jackson-datatype-jdk8</artifactId>
 		<version>${jackson2.version}</version>
 	</dependency>
+	
+	<!-- mail -->
+	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-email</artifactId>
+		<version>1.2</version>
+	</dependency>
+	
+	
   </dependencies>
 
   <build>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.projects.je25th.UfMm.dto.Log;
 import com.projects.je25th.UfMm.service.LogService;
+import com.projects.je25th.portfolio.service.SendMailService;
 
 @Controller
 public class GoGitController {
@@ -21,18 +22,27 @@ public class GoGitController {
 	@Autowired
 	LogService logService;
 	
+	@Autowired
+	SendMailService sendMailService;
+	
 	@GetMapping("gogit/{id}")
 	public String gogit(@PathVariable(name="id")int id, HttpServletRequest request) {
 		
+		String ip = request.getHeader("x-real-ip") + "";
+		String from = "whoareyou";
+		
 		Log log = new Log();
-		log.setIp(request.getHeader("x-real-ip") + "");
+		log.setIp(ip);
 		if(id == 1)
-			log.setMethod("saramin");
+			from = "saramin";
 		else if(id == 2)
-			log.setMethod("jobkorea");
-		else
-			log.setMethod("whoareyou");
+			from = "jobkorea";
+		log.setMethod(from);
+		
 		logService.writeLog(log);
+		
+		//이메일 보내기
+		sendMail(ip, from);
 		
 //		System.out.println(request.getRemoteAddr());
 //		System.out.println(InetAddress.getLocalHost());
@@ -49,21 +59,33 @@ public class GoGitController {
 	@GetMapping("/gogit1")
 	public String oldGogitS(HttpServletRequest request) {
 		
+		String ip = request.getHeader("x-real-ip") + "";
+		String from = "saramin(old)";
+		
 		Log log = new Log();
-		log.setIp(request.getHeader("x-real-ip") + "");
-		log.setMethod("saramin(old)");
+		log.setIp(ip);
+		log.setMethod(from);
 		logService.writeLog(log);
+		
+		//이메일 보내기
+		sendMail(ip, from);
 		
 		return "redirect:https://github.com/oij511/portfolio";
 	}
 	
 	@GetMapping("/gogit2")
 	public String oldGogitJ(HttpServletRequest request) {
+
+		String ip = request.getHeader("x-real-ip") + "";
+		String from = "jobkorea(old)";
 		
 		Log log = new Log();
-		log.setIp(request.getHeader("x-real-ip") + "");
-		log.setMethod("jobkorea(old)");
+		log.setIp(ip);
+		log.setMethod(from);
 		logService.writeLog(log);
+		
+		//이메일 보내기
+		sendMail(ip, from);
 		
 		return "redirect:https://github.com/oij511/portfolio";
 	}
@@ -99,5 +121,9 @@ public class GoGitController {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void sendMail(String ip, String from) {
+		sendMailService.sendMail("누군가가 내 포폴을 조회!", "방문자 : " + ip + "<br>사이트 : " + from);
 	}
 }
