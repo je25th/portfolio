@@ -1,6 +1,8 @@
-package com.projects.je25th.UfMm.dao;
+package com.projects.je25th.portfolio.dao;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -12,7 +14,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import com.projects.je25th.UfMm.dto.Log;
+import com.projects.je25th.portfolio.dto.Log;
 
 @Repository
 public class LogDao {
@@ -37,5 +39,10 @@ public class LogDao {
 	public void insert(Log log) {
 		SqlParameterSource params = new BeanPropertySqlParameterSource(log);
 		insertAction.execute(params);
+	}
+	
+	public int selectIpCount(String ip) {
+		Map<String, String> params = Collections.singletonMap("ip", ip);
+		return jdbc.queryForObject("SELECT count(*) FROM log WHERE ip= :ip", params, Integer.class);
 	}
 }

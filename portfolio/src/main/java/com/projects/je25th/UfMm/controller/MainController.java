@@ -88,4 +88,11 @@ public class MainController {
 		
 		return "UfMm/main";
 	}
+	
+	@GetMapping("/test")
+	public String test() {
+		System.out.println("[UfMm] main Get");
+		
+		return "UfMm/pc/pc_main";
+	}
 }

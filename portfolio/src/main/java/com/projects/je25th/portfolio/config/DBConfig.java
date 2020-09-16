@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class DBConfig {
 
 	private String driverClassName = "org.mariadb.jdbc.Driver";
-    private String url = "jdbc:mariadb://localhost:3306/je25th";//je25th.cafe24.com//localhost:3306
+    private String url = "jdbc:mariadb://je25th.cafe24.com/je25th";//je25th.cafe24.com//localhost:3306
 
     private String username = "je25th"; 
     private String password = "awow35se!";

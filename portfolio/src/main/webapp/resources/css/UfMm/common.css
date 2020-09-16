@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'NEXON Lv2 Gothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'NEXON Lv2 Gothic Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'NEXON Lv2 Gothic Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --themecolor: rgb(252, 165, 179);
+    --subcolor: gray;
+    --memuwrapsize: 50px;
+    --memusize: 40px;
+    --font-regular: 'NEXON Lv2 Gothic', nomal;
+    --font-bold: 'NEXON Lv2 Gothic Bold', nomal;
+    --font-light: 'NEXON Lv2 Gothic Light', nomal;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+span {
+    position: relative;
+}
+
+button {
+	box-sizing: border-box;
+	
+	margin: 0;
+	border: none;
+	cursor: pointer;
+	background: none;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+}
+
+.staroff {
+	
+}

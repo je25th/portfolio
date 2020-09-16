@@ -1,4 +1,4 @@
-package com.projects.je25th.UfMm.dto;
+package com.projects.je25th.portfolio.dto;
 
 import java.util.Date;
 

@@ -2,6 +2,7 @@ package com.projects.je25th.portfolio.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,8 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.projects.je25th.UfMm.dto.Log;
-import com.projects.je25th.UfMm.service.LogService;
+import com.projects.je25th.portfolio.dto.Log;
+import com.projects.je25th.portfolio.service.LogService;
 import com.projects.je25th.portfolio.service.SendMailService;
 
 @Controller
@@ -42,7 +43,7 @@ public class GoGitController {
 		logService.writeLog(log);
 		
 		//이메일 보내기
-		sendMail(ip, from);
+		sendMail(ip, from, logService.ipVisiteCount(ip));
 		
 //		System.out.println(request.getRemoteAddr());
 //		System.out.println(InetAddress.getLocalHost());
@@ -68,7 +69,7 @@ public class GoGitController {
 		logService.writeLog(log);
 		
 		//이메일 보내기
-		sendMail(ip, from);
+		sendMail(ip, from, logService.ipVisiteCount(ip));
 		
 		return "redirect:https://github.com/oij511/portfolio";
 	}
@@ -85,7 +86,7 @@ public class GoGitController {
 		logService.writeLog(log);
 		
 		//이메일 보내기
-		sendMail(ip, from);
+		sendMail(ip, from, logService.ipVisiteCount(ip));
 		
 		return "redirect:https://github.com/oij511/portfolio";
 	}
@@ -123,7 +124,12 @@ public class GoGitController {
 		
 	}
 	
-	public void sendMail(String ip, String from) {
-		sendMailService.sendMail("누군가가 내 포폴을 조회!", "방문자 : " + ip + "<br>사이트 : " + from);
+	public void sendMail(String ip, String from, int count) {
+		sendMailService.sendMail("누군가가 내 포폴을 조회!"
+				, "사이트 : " + from 
+				+ "<br>방문자 : " + ip 
+				+ "<br>방문횟수 : " + count 
+				+ "<br>" + new Date().toString() 
+				+ "<br>");
 	}
 }
