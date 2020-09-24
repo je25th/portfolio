@@ -1,5 +1,7 @@
 package com.projects.je25th.UfMm.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.projects.je25th.UfMm.dto.AuthInfo;
+import com.projects.je25th.UfMm.dto.User;
 import com.projects.je25th.UfMm.service.UserService;
 
 @Controller
@@ -43,5 +46,4 @@ public class LoginController {
 		
 		return "redirect:/unfolded-memo/login";
 	}
-	
 }

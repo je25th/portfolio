@@ -1,8 +1,9 @@
 /**
  * 
  */
-var PROJECT_NAME = '/portfolio/unfolded-memo';
+var PROJECT_NAME = '/unfolded-memo';
 var URL_LOGIN = PROJECT_NAME + '/login';
+var URL_JOIN = PROJECT_NAME + '/join';
 
 var URL_MAIN = PROJECT_NAME + '/main';
 var URL_STAR = PROJECT_NAME + '/star';

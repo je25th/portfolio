@@ -3,6 +3,7 @@ package com.projects.je25th.UfMm.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.projects.je25th.UfMm.dao.UserDao;
 import com.projects.je25th.UfMm.dto.AuthInfo;
@@ -34,21 +35,30 @@ public class UserService {
 		return userDao.deleteById(id);
 	}
 	
-	@Transactional(readOnly=false)
-	public User addUser(User user) {
-		//TODO :: 회원가입 일시 지정
-		return userDao.insert(user);
+	@Transactional(rollbackFor={Exception.class})
+	public boolean addUser(User user) {
+		boolean result = true;
+		
+		try {
+			userDao.insert(user);
+		} catch(Exception e) {
+			System.out.println(e);
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			result = false;
+		}
+		
+		return result;
 	}
 	
 	@Transactional(readOnly=true)
 	public boolean checkEnableId(String id) {
 		//같은 아이디가 있을 경우 false 리턴
-		return userDao.selectById(id)==null ? false : true;
+		return userDao.selectById(id)==null ? true : false;
 	}
 	
 	@Transactional(readOnly=true)
 	public boolean checkEnableEmail(String email) {
 		//같은 이메일이 있을 경우 false 리턴
-		return userDao.selectByEmail(email)==null ? false : true;
+		return userDao.selectByEmail(email)==null ? true : false;
 	}
 }

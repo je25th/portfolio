@@ -59,6 +59,7 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter {
     		.addPathPatterns("/unfolded-memo/**")
     		.excludePathPatterns("/unfolded-memo/login")
     		.excludePathPatterns("/unfolded-memo/admin/**")
+    		.excludePathPatterns("/unfolded-memo/join/**")
     		.excludePathPatterns("/unfolded-memo/test");
     }
     
